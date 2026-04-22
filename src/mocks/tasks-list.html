@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <script type='text/javascript' nonce='RT1SiMDuEXNJHp92XS/7rw=='
+    src='https://contribution.usercontent.google.com/eVqDBQ75XcFC34nDkPk3m7YqrsSSr16IzTkrFcnFXbLaUCHU1XSEsm-xMje9y6cVwtuGapOFJ5ZYxQmGNzHBZPhozWZxbP9WSBUNZ8dGjgyPGzJn5MZy8AoWn7Vf17fgthBtzTJZnpv-OGH34LANIsIcU1idZrUl73u6EqDpFIEUU2rPju2RK0rQSGM9gW1z4FYy3-XLkoEGeNOOLq2Eew79t2YdFJBKrYuEX3UUysPBQG_W_A6_YVtMNbWOzeNMDoe1mUEoybtyPOP6sRC6vo5vyL66PCSpRp8uMY8m-hgbMT2BKDV17dltcj2sMAUYVtoDwNeN2UejAtYcZg5kWOxjP44IZAH0z-o-NA_wCa8j9UJh-mQt1rLbxy41ki8UimqoFFMJJbwIoEXor0e6mI-_Cx0LZoiYC2ojqvtUz9ykj6AyoH4UOipn67-gEDy_O2tDIBUSYUqj1oOklA49PvaQAxVz8zo7DXOGp1YwtR13mzAF1FFCZkELb2i22xBUozhvZHcsClZpAvuXSGh-0VOy-Ld6nZnLC3a94BcI_G0lJ_Bg2u7PBeqVCcEQLuwcBWMzKRtmIH1b5N8yvdyPKpye4yK9vAE6viayWb07puVYbqj0rcG5KInzhi7i-ZrJLj9Bpsd3QqY3eFK30n5xChwi1330l-WeDLQUAQqr_8cxUiuERMWoH-I4tCvnufBf6hf7t-fZCfTMM3GUaF9f899xgZGEPWjBjBGl4FtgAWGWqpwQD6CORLABnFIhlQvdwu0rukMdZMQeZ_aWwq8JtQvleqXMH7oNyVxGkmoI'></script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&amp;family=Inter:wght@400;500;600;700&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "outline-variant": "#c7c4d8",
+            "secondary-fixed": "#dae2fd",
+            "primary-container": "#4f46e5",
+            "surface-container-low": "#eff4ff",
+            "primary-fixed": "#e2dfff",
+            "on-secondary-fixed": "#131b2e",
+            "surface-tint": "#4d44e3",
+            "on-tertiary-container": "#dadcde",
+            "on-primary-container": "#dad7ff",
+            "on-error-container": "#93000a",
+            "surface-container": "#e5eeff",
+            "on-tertiary-fixed": "#191c1e",
+            "on-surface-variant": "#464555",
+            "primary-fixed-dim": "#c3c0ff",
+            "secondary": "#565e74",
+            "surface-container-highest": "#d3e4fe",
+            "secondary-fixed-dim": "#bec6e0",
+            "surface-bright": "#f8f9ff",
+            "surface": "#f8f9ff",
+            "on-secondary": "#ffffff",
+            "on-tertiary-fixed-variant": "#444749",
+            "on-secondary-container": "#5c647a",
+            "tertiary-container": "#5e6163",
+            "on-primary-fixed-variant": "#3323cc",
+            "on-background": "#0b1c30",
+            "on-error": "#ffffff",
+            "background": "#f8f9ff",
+            "error": "#ba1a1a",
+            "inverse-primary": "#c3c0ff",
+            "surface-dim": "#cbdbf5",
+            "on-primary": "#ffffff",
+            "inverse-surface": "#213145",
+            "secondary-container": "#dae2fd",
+            "tertiary": "#46494b",
+            "error-container": "#ffdad6",
+            "tertiary-fixed-dim": "#c4c7c9",
+            "on-primary-fixed": "#0f0069",
+            "surface-container-lowest": "#ffffff",
+            "surface-variant": "#d3e4fe",
+            "primary": "#3525cd",
+            "surface-container-high": "#dce9ff",
+            "on-tertiary": "#ffffff",
+            "tertiary-fixed": "#e0e3e5",
+            "inverse-on-surface": "#eaf1ff",
+            "on-surface": "#0b1c30",
+            "outline": "#777587",
+            "on-secondary-fixed-variant": "#3f465c"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "stack-lg": "32px",
+            "unit": "8px",
+            "stack-xs": "4px",
+            "stack-sm": "8px",
+            "container-max": "1280px",
+            "stack-xl": "64px",
+            "stack-md": "16px",
+            "margin-page": "40px",
+            "gutter": "24px"
+          },
+          "fontFamily": {
+            "h2": ["Manrope"],
+            "h1": ["Manrope"],
+            "body-md": ["Inter"],
+            "h3": ["Manrope"],
+            "label-caps": ["Inter"],
+            "body-lg": ["Inter"],
+            "body-sm": ["Inter"]
+          },
+          "fontSize": {
+            "h2": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "h1": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "h3": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      display: inline-block;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+    }
+
+    body {
+      background-color: #f8f9ff;
+    }
+  </style>
+</head>
+
+<body class="font-body-md text-on-surface antialiased">
+  <!-- TopAppBar Shell -->
+  <header
+    class="bg-white/80 backdrop-blur-md font-manrope antialiased fixed top-0 w-full z-50 border-b border-slate-200">
+    <div class="max-w-[1280px] mx-auto flex justify-between items-center px-6 py-3">
+      <div class="flex items-center gap-stack-md">
+        <span class="text-xl font-bold tracking-tight text-slate-900">FocusFlow</span>
+        <nav class="hidden md:flex gap-stack-lg ml-stack-xl">
+          <a class="text-slate-500 hover:text-slate-900 transition-colors duration-200" href="#">Dashboard</a>
+          <a class="text-indigo-600 font-semibold border-b-2 border-indigo-600" href="#">Tasks</a>
+          <a class="text-slate-500 hover:text-slate-900 transition-colors duration-200" href="#">Calendar</a>
+          <a class="text-slate-500 hover:text-slate-900 transition-colors duration-200" href="#">Analytics</a>
+        </nav>
+      </div>
+      <div class="flex items-center gap-stack-md">
+        <div class="hidden lg:flex items-center bg-slate-100 rounded-lg px-3 py-1.5 gap-2">
+          <span class="material-symbols-outlined text-slate-400 text-[20px]">search</span>
+          <input class="bg-transparent border-none focus:ring-0 text-body-sm w-48" placeholder="Buscar..."
+            type="text" />
+        </div>
+        <div class="flex items-center gap-stack-sm">
+          <button class="p-2 text-slate-500 hover:bg-slate-50 rounded-lg transition-colors">
+            <span class="material-symbols-outlined">dark_mode</span>
+          </button>
+          <button class="p-2 text-slate-500 hover:bg-slate-50 rounded-lg transition-colors">
+            <span class="material-symbols-outlined">notifications</span>
+          </button>
+          <button class="p-2 text-slate-500 hover:bg-slate-50 rounded-lg transition-colors">
+            <span class="material-symbols-outlined">settings</span>
+          </button>
+        </div>
+        <button
+          class="bg-primary-container text-white px-4 py-2 rounded-lg font-semibold text-body-sm active:opacity-80 active:scale-[0.98] transition-all flex items-center gap-2 shadow-sm">
+          <span class="material-symbols-outlined text-[18px]">add</span>
+          Nueva tarea
+        </button>
+        <img alt="Profile" class="w-8 h-8 rounded-full ml-2 border border-slate-200"
+          data-alt="professional portrait of a young male designer in a clean studio environment with soft natural lighting"
+          src="https://lh3.googleusercontent.com/aida-public/AB6AXuBOa5JYcXGxOR65lb4jmiA2KJrvkSFSyOSFMVfw1MBgIsfLILjdBtGzauXirbTpmnxWYLmCuBPzJeuo7z3P82ssm0DummAWoKGLCcnIWxsCkIgfWCdQYeEd2hrCa7SFHPKVYNRvDwniY-p77MlU_4fOpLBia-ogmPekvMDVOB2J_AsPYrOqa4oTKfMED6aNMYqkHa99FxyEkXeBHugVkOcrsrir_p0gDHDPQGhW379LtsjiJJ5SHYIDhfJ4W85f3iExa5Xzp6-FNAwC" />
+      </div>
+    </div>
+  </header>
+  <!-- SideNavBar (Desktop Only) -->
+  <aside
+    class="hidden lg:flex flex-col fixed left-0 top-0 h-full w-64 p-4 pt-20 bg-slate-50 border-r border-slate-200 z-40">
+    <div class="mb-stack-lg px-2">
+      <div class="flex items-center gap-3 p-2">
+        <div class="w-8 h-8 bg-indigo-600 rounded flex items-center justify-center text-white">
+          <span class="material-symbols-outlined text-[20px]">filter_tilt_shift</span>
+        </div>
+        <div>
+          <h2 class="text-lg font-bold text-slate-900 leading-none">FocusFlow</h2>
+          <span class="text-[11px] text-slate-500 font-medium uppercase tracking-wider">Professional Plan</span>
+        </div>
+      </div>
+    </div>
+    <nav class="flex-1 space-y-1">
+      <a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-slate-100 hover:translate-x-1 transition-all rounded-md font-medium text-sm"
+        href="#">
+        <span class="material-symbols-outlined text-[20px]">grid_view</span>
+        Dashboard
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2.5 bg-white text-indigo-600 shadow-sm rounded-md font-medium text-sm"
+        href="#">
+        <span class="material-symbols-outlined text-[20px]">check_circle</span>
+        Tasks
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-slate-100 hover:translate-x-1 transition-all rounded-md font-medium text-sm"
+        href="#">
+        <span class="material-symbols-outlined text-[20px]">calendar_today</span>
+        Calendar
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-slate-100 hover:translate-x-1 transition-all rounded-md font-medium text-sm"
+        href="#">
+        <span class="material-symbols-outlined text-[20px]">insights</span>
+        Analytics
+      </a>
+    </nav>
+    <div class="pt-4 border-t border-slate-200 space-y-1">
+      <a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-slate-100 transition-all rounded-md font-medium text-sm"
+        href="#">
+        <span class="material-symbols-outlined text-[20px]">help_outline</span>
+        Help
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2.5 text-slate-600 hover:bg-slate-100 transition-all rounded-md font-medium text-sm"
+        href="#">
+        <span class="material-symbols-outlined text-[20px]">logout</span>
+        Logout
+      </a>
+    </div>
+  </aside>
+  <!-- Main Content Canvas -->
+  <main class="lg:pl-64 pt-20 pb-24 md:pb-8 min-h-screen">
+    <div class="max-w-4xl mx-auto px-margin-page py-stack-lg">
+      <!-- Page Header -->
+      <div class="flex flex-col md:flex-row md:items-end justify-between gap-stack-md mb-stack-xl">
+        <div>
+          <h1 class="font-h1 text-h1 text-on-background mb-stack-xs">Mis Tareas</h1>
+          <p class="font-body-md text-body-md text-secondary">Organiza tu flujo de trabajo y mantén el enfoque.</p>
+        </div>
+        <div class="flex gap-stack-sm">
+          <button
+            class="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-lg font-medium text-body-sm flex items-center gap-2 hover:bg-slate-50 transition-colors">
+            <span class="material-symbols-outlined text-[18px]">filter_list</span>
+            Filtrar
+          </button>
+          <button
+            class="bg-white border border-slate-200 text-slate-700 px-4 py-2 rounded-lg font-medium text-body-sm flex items-center gap-2 hover:bg-slate-50 transition-colors">
+            <span class="material-symbols-outlined text-[18px]">sort</span>
+            Ordenar
+          </button>
+        </div>
+      </div>
+      <!-- Task List Grid (Bento style) -->
+      <div class="space-y-stack-lg">
+        <!-- Category: Menos de 24 horas -->
+        <section>
+          <div class="flex items-center gap-3 mb-stack-md">
+            <h2 class="font-h2 text-h3 text-on-background">Menos de 24 horas</h2>
+            <span
+              class="bg-error-container text-on-error-container text-[12px] font-bold px-2 py-0.5 rounded-full">3</span>
+          </div>
+          <div class="bg-white rounded-xl shadow-[0px_4px_12px_rgba(15,23,42,0.05)] overflow-hidden">
+            <div class="divide-y divide-slate-100">
+              <!-- Task Item -->
+              <div
+                class="group flex items-center justify-between p-4 hover:bg-slate-50 transition-colors cursor-pointer">
+                <div class="flex items-center gap-4">
+                  <div
+                    class="w-5 h-5 rounded border-2 border-slate-300 flex items-center justify-center group-hover:border-indigo-600 transition-colors">
+                  </div>
+                  <span class="font-medium text-slate-900">Revisión de diseño UI/UX</span>
+                </div>
+                <div class="flex items-center gap-stack-md">
+                  <span
+                    class="text-error font-mono font-bold text-sm bg-error-container/20 px-2 py-1 rounded">03:15:05</span>
+                  <span
+                    class="material-symbols-outlined text-slate-300 text-[20px] opacity-0 group-hover:opacity-100 transition-opacity">chevron_right</span>
+                </div>
+              </div>
+              <!-- Task Item -->
+              <div
+                class="group flex items-center justify-between p-4 hover:bg-slate-50 transition-colors cursor-pointer">
+                <div class="flex items-center gap-4">
+                  <div class="w-5 h-5 rounded border-2 border-slate-300"></div>
+                  <span class="font-medium text-slate-900">Enviar reporte trimestral</span>
+                </div>
+                <div class="flex items-center gap-stack-md">
+                  <span
+                    class="text-error font-mono font-bold text-sm bg-error-container/20 px-2 py-1 rounded">12:45:10</span>
+                  <span
+                    class="material-symbols-outlined text-slate-300 text-[20px] opacity-0 group-hover:opacity-100 transition-opacity">chevron_right</span>
+                </div>
+              </div>
+              <!-- Task Item -->
+              <div
+                class="group flex items-center justify-between p-4 hover:bg-slate-50 transition-colors cursor-pointer">
+                <div class="flex items-center gap-4">
+                  <div class="w-5 h-5 rounded border-2 border-slate-300"></div>
+                  <span class="font-medium text-slate-900">Preparar presentación de cliente</span>
+                </div>
+                <div class="flex items-center gap-stack-md">
+                  <span
+                    class="text-error font-mono font-bold text-sm bg-error-container/20 px-2 py-1 rounded">21:00:00</span>
+                  <span
+                    class="material-symbols-outlined text-slate-300 text-[20px] opacity-0 group-hover:opacity-100 transition-opacity">chevron_right</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Category: Más de 24 horas -->
+        <section>
+          <div class="flex items-center gap-3 mb-stack-md">
+            <h2 class="font-h2 text-h3 text-on-background">Más de 24 horas</h2>
+            <span
+              class="bg-surface-container-highest text-on-surface-variant text-[12px] font-bold px-2 py-0.5 rounded-full">2</span>
+          </div>
+          <div class="bg-white rounded-xl shadow-[0px_4px_12px_rgba(15,23,42,0.05)] overflow-hidden">
+            <div class="divide-y divide-slate-100">
+              <!-- Task Item -->
+              <div
+                class="group flex items-center justify-between p-4 hover:bg-slate-50 transition-colors cursor-pointer">
+                <div class="flex items-center gap-4">
+                  <div class="w-5 h-5 rounded border-2 border-slate-300"></div>
+                  <span class="font-medium text-slate-900">Actualizar documentación de API</span>
+                </div>
+                <div class="flex items-center gap-stack-md">
+                  <span class="text-slate-500 font-medium text-sm">2 días</span>
+                  <span
+                    class="material-symbols-outlined text-slate-300 text-[20px] opacity-0 group-hover:opacity-100 transition-opacity">chevron_right</span>
+                </div>
+              </div>
+              <!-- Task Item -->
+              <div
+                class="group flex items-center justify-between p-4 hover:bg-slate-50 transition-colors cursor-pointer">
+                <div class="flex items-center gap-4">
+                  <div class="w-5 h-5 rounded border-2 border-slate-300"></div>
+                  <span class="font-medium text-slate-900">Planificar sprint de desarrollo</span>
+                </div>
+                <div class="flex items-center gap-stack-md">
+                  <span class="text-slate-500 font-medium text-sm">2 semanas</span>
+                  <span
+                    class="material-symbols-outlined text-slate-300 text-[20px] opacity-0 group-hover:opacity-100 transition-opacity">chevron_right</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Category: Sin fecha -->
+        <section>
+          <div class="flex items-center gap-3 mb-stack-md">
+            <h2 class="font-h2 text-h3 text-on-background">Sin fecha</h2>
+            <span class="bg-surface-container text-secondary text-[12px] font-bold px-2 py-0.5 rounded-full">1</span>
+          </div>
+          <div
+            class="bg-white rounded-xl shadow-[0px_4px_12px_rgba(15,23,42,0.05)] overflow-hidden border border-dashed border-slate-200">
+            <div class="divide-y divide-slate-100">
+              <!-- Task Item -->
+              <div
+                class="group flex items-center justify-between p-4 hover:bg-slate-50 transition-colors cursor-pointer">
+                <div class="flex items-center gap-4">
+                  <div class="w-5 h-5 rounded border-2 border-slate-300"></div>
+                  <span class="font-medium text-slate-900 italic opacity-70">Investigar nuevas librerías gráficas</span>
+                </div>
+                <div class="flex items-center gap-stack-md">
+                  <span class="text-slate-400 font-medium text-sm">Sin fecha</span>
+                  <span
+                    class="material-symbols-outlined text-slate-300 text-[20px] opacity-0 group-hover:opacity-100 transition-opacity">chevron_right</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+        <!-- Productivity Card / Empty State Style Graphic -->
+        <div
+          class="mt-stack-xl p-8 rounded-3xl bg-primary-container text-white flex items-center justify-between overflow-hidden relative">
+          <div class="z-10 max-w-md">
+            <h3 class="text-h3 font-h3 mb-2">¡Casi terminas!</h3>
+            <p class="text-on-primary-container opacity-90 mb-6">Has completado el 85% de tus objetivos para hoy. Mantén
+              el ritmo y finaliza tus pendientes de alta prioridad.</p>
+            <div class="w-full bg-indigo-900/30 rounded-full h-2 mb-2">
+              <div class="bg-white h-2 rounded-full w-[85%]"></div>
+            </div>
+            <span class="text-[12px] font-bold uppercase tracking-wider">Progreso Diario</span>
+          </div>
+          <div class="hidden md:block absolute right-0 top-0 w-1/3 h-full overflow-hidden">
+            <img alt="abstract decorative" class="w-full h-full object-cover mix-blend-overlay opacity-30"
+              data-alt="abstract architectural details of a modern building with clean lines and blue shadows in high contrast lighting"
+              src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXNEF8xw5JPvdus1sqHrJyrF1DFXqKJX4ekdFmgt5wA0hVl7_c5ojrbh7GMu275GjyGBi6QC3gRDVPnQh2Ecl9Vr-YzWRZlxgNwT2O01xE6bBZ1jY1w1QckJk203X5eDip84eTpEGiH1SGK4jrU3TjeZKnaWAFL2_U9irxn5h8wG4V3wMh03p9svxgH9-iCol7jYQrtjTMfFtOjH8KbmlkK9GaqRth7wV4_qaU2gKdLZKp1d5gl9TTELRr8_2HXhnX8TuGYXwgPNJo" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </main>
+  <!-- BottomNavBar (Mobile Only) -->
+  <nav
+    class="fixed bottom-0 left-0 w-full z-50 bg-white border-t border-slate-200 flex justify-around items-center px-4 py-3 lg:hidden shadow-[0_-4px_12px_rgba(15,23,42,0.05)]">
+    <a class="flex flex-col items-center justify-center text-slate-400 active:scale-95 transition-transform" href="#">
+      <span class="material-symbols-outlined">home</span>
+      <span class="font-manrope text-[10px] font-bold uppercase tracking-wider mt-1">Home</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-indigo-600 active:scale-95 transition-transform" href="#">
+      <span class="material-symbols-outlined">list_alt</span>
+      <span class="font-manrope text-[10px] font-bold uppercase tracking-wider mt-1">Tasks</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-slate-400 active:scale-95 transition-transform" href="#">
+      <span class="material-symbols-outlined">timer</span>
+      <span class="font-manrope text-[10px] font-bold uppercase tracking-wider mt-1">Focus</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-slate-400 active:scale-95 transition-transform" href="#">
+      <span class="material-symbols-outlined">person</span>
+      <span class="font-manrope text-[10px] font-bold uppercase tracking-wider mt-1">Profile</span>
+    </a>
+  </nav>
+  <!-- Floating Action Button (Mobile) -->
+  <button
+    class="fixed bottom-24 right-6 w-14 h-14 bg-indigo-600 text-white rounded-full flex items-center justify-center shadow-lg lg:hidden active:scale-95 transition-transform">
+    <span class="material-symbols-outlined">add</span>
+  </button>
+</body>
+
+</html>

@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <script type='text/javascript' nonce='zF3sA9W0rU/vhMAYJPzQQA=='
+    src='https://contribution.usercontent.google.com/MnNHG9LO_B1CQd86Gqm1sGlMJW7oXQ4xcH6yBqOjK-qcgnOwyZDm0kueq80pMeI8nxkoUPzBYOYeQGTcEt0iY-ZRsMuA3sfQkRCJagFqyrGPB1pGE89dNrmW_IWJukWoSrpK5SrtL9gzf24p6edN3-DGWQb1sLnS5u7SwecVIfZg3v1M_4vPu3tWXenWqZexsN3KDTFscVfj32S_piaCcwv8FEIveFNn2c6p1HQGS4VS50TEw9cZd2cca7xBLotRuOWbTBxNzkHGnfjxZyZdML8nO5Pef3XzinqRXHUh2NnU30ZAqQEqmcL2-VsEI4og4EaBJeEIYfI9rk8eXXPVw_fNK1nWrm022WVbrDmSVTT5GGFD9CYgETqVe14XbiLfrNiz1wNAYWsiX3EaOFxDoraUZTLOKU9NOOrA4wTxpqtFC541MDVoXPF02_rz_jkF8-FC1xiWFjY5MGrMBsBqBYM1ljbDxVVEALxNJDIqvNZSCXtcW45uB7xwTOPzXHtvrUm-d1n3DE7FqrIyZ-A_MM5pczdUWB9aBVfM5XngAe0kLsMFObFZTslYxp7lh2QZeC_QS8butJOqFMGyVIMTOc0gLSXbbAJmItwujwF0l8qX5tNrFP5_Ys1Z5tWDjEcSBUbVcUJNfixM88lEC-sxCQzsb6QvSd_hbWOBaf5hkR1AKdsP1cmGw5ly-OHJ2OrhyEXcbo2Oy0cIUuyH5reAkS2rMXkzuViTDFrHdlvda8vfIefU6R13fq_RQorT4Z-GO2DazRsvwpkaoukxhOc1RjFXVp3wtcB9lPnwRcBs'></script>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&amp;family=Manrope:wght@600;700;800&amp;family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap"
+    rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      darkMode: "class",
+      theme: {
+        extend: {
+          "colors": {
+            "outline-variant": "#c7c4d8",
+            "secondary-fixed": "#dae2fd",
+            "primary-container": "#4f46e5",
+            "surface-container-low": "#eff4ff",
+            "primary-fixed": "#e2dfff",
+            "on-secondary-fixed": "#131b2e",
+            "surface-tint": "#4d44e3",
+            "on-tertiary-container": "#dadcde",
+            "on-primary-container": "#dad7ff",
+            "on-error-container": "#93000a",
+            "surface-container": "#e5eeff",
+            "on-tertiary-fixed": "#191c1e",
+            "on-surface-variant": "#464555",
+            "primary-fixed-dim": "#c3c0ff",
+            "secondary": "#565e74",
+            "surface-container-highest": "#d3e4fe",
+            "secondary-fixed-dim": "#bec6e0",
+            "surface-bright": "#f8f9ff",
+            "surface": "#f8f9ff",
+            "on-secondary": "#ffffff",
+            "on-tertiary-fixed-variant": "#444749",
+            "on-secondary-container": "#5c647a",
+            "tertiary-container": "#5e6163",
+            "on-primary-fixed-variant": "#3323cc",
+            "on-background": "#0b1c30",
+            "on-error": "#ffffff",
+            "background": "#f8f9ff",
+            "error": "#ba1a1a",
+            "inverse-primary": "#c3c0ff",
+            "surface-dim": "#cbdbf5",
+            "on-primary": "#ffffff",
+            "inverse-surface": "#213145",
+            "secondary-container": "#dae2fd",
+            "tertiary": "#46494b",
+            "error-container": "#ffdad6",
+            "tertiary-fixed-dim": "#c4c7c9",
+            "on-primary-fixed": "#0f0069",
+            "surface-container-lowest": "#ffffff",
+            "surface-variant": "#d3e4fe",
+            "primary": "#3525cd",
+            "surface-container-high": "#dce9ff",
+            "on-tertiary": "#ffffff",
+            "tertiary-fixed": "#e0e3e5",
+            "inverse-on-surface": "#eaf1ff",
+            "on-surface": "#0b1c30",
+            "outline": "#777587",
+            "on-secondary-fixed-variant": "#3f465c"
+          },
+          "borderRadius": {
+            "DEFAULT": "0.125rem",
+            "lg": "0.25rem",
+            "xl": "0.5rem",
+            "full": "0.75rem"
+          },
+          "spacing": {
+            "stack-lg": "32px",
+            "unit": "8px",
+            "stack-xs": "4px",
+            "stack-sm": "8px",
+            "container-max": "1280px",
+            "stack-xl": "64px",
+            "stack-md": "16px",
+            "margin-page": "40px",
+            "gutter": "24px"
+          },
+          "fontFamily": {
+            "h2": ["Manrope"],
+            "h1": ["Manrope"],
+            "body-md": ["Inter"],
+            "h3": ["Manrope"],
+            "label-caps": ["Inter"],
+            "body-lg": ["Inter"],
+            "body-sm": ["Inter"]
+          },
+          "fontSize": {
+            "h2": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "h1": ["40px", { "lineHeight": "48px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+            "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+            "h3": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+            "label-caps": ["12px", { "lineHeight": "16px", "letterSpacing": "0.05em", "fontWeight": "600" }],
+            "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+            "body-sm": ["14px", { "lineHeight": "20px", "fontWeight": "400" }]
+          }
+        },
+      },
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    body {
+      background-color: #f8f9ff;
+    }
+  </style>
+</head>
+
+<body class="font-body-md text-on-surface antialiased">
+  <!-- TopNavBar -->
+  <header
+    class="fixed top-0 w-full z-50 flex justify-between items-center px-6 py-3 max-w-[1280px] left-1/2 -translate-x-1/2 bg-white/80 backdrop-blur-md border-b border-slate-200">
+    <div class="flex items-center gap-stack-md">
+      <span class="text-xl font-bold tracking-tight text-slate-900 font-h3">FocusFlow</span>
+    </div>
+    <div class="flex items-center gap-stack-lg">
+      <nav class="hidden md:flex gap-stack-lg">
+        <a class="text-slate-500 hover:text-slate-900 transition-colors duration-200 font-label-caps uppercase"
+          href="#">Dashboard</a>
+        <a class="text-indigo-600 font-semibold border-b-2 border-indigo-600 font-label-caps uppercase"
+          href="#">Tasks</a>
+        <a class="text-slate-500 hover:text-slate-900 transition-colors duration-200 font-label-caps uppercase"
+          href="#">Calendar</a>
+      </nav>
+      <div class="flex items-center gap-stack-sm">
+        <button class="p-2 text-slate-500 hover:bg-slate-50 rounded-lg transition-colors">
+          <span class="material-symbols-outlined" data-icon="dark_mode">dark_mode</span>
+        </button>
+        <button class="p-2 text-slate-500 hover:bg-slate-50 rounded-lg transition-colors relative">
+          <span class="material-symbols-outlined" data-icon="notifications">notifications</span>
+          <span class="absolute top-2 right-2 w-2 h-2 bg-indigo-600 rounded-full border-2 border-white"></span>
+        </button>
+        <button class="p-2 text-slate-500 hover:bg-slate-50 rounded-lg transition-colors">
+          <span class="material-symbols-outlined" data-icon="settings">settings</span>
+        </button>
+        <div class="h-8 w-8 rounded-full bg-slate-200 ml-2 overflow-hidden border border-slate-200">
+          <img alt="User profile" class="h-full w-full object-cover"
+            data-alt="close-up portrait of a professional man in a minimalist studio setting with soft natural lighting"
+            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCIa7vZxV-iyYGc6pfYuIo_gnZZQKjeKHaobulLmmcAqMzqCWe5mrf2prDrbNSjCvo4uRPUcZkgyQVJtVqqvamI7zmzlJRN56hGVmQe-h59Dpc0THQ2xjXCKp7tZvY1jxqsbaFqIAaSXavUCv-PB1xbeCLtYq911eH3NG6Aa8q6njzi81SgNRNP76XnLP5NLMmOcusf42h0dVa9Bs1fPbKWnPnwanPnhLb4Nx-JjgWX_tJXvFoDduPJ4bzhNbYP6w5ZHfBqD3nths3Q" />
+        </div>
+      </div>
+      <button
+        class="hidden md:block bg-primary-container text-white px-stack-md py-2 rounded-lg font-body-sm font-semibold hover:opacity-90 active:scale-[0.98] transition-all">
+        Nueva tarea
+      </button>
+    </div>
+  </header>
+  <!-- SideNavBar (Desktop Only) -->
+  <aside
+    class="hidden lg:flex flex-col fixed left-0 top-0 h-full w-64 p-4 bg-slate-50 border-r border-slate-200 z-40 pt-20">
+    <div class="flex flex-col gap-stack-xs flex-1">
+      <a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-md transition-all font-body-sm font-medium"
+        href="#">
+        <span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+        <span>Dashboard</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2 bg-white text-indigo-600 shadow-sm rounded-md transition-all font-body-sm font-medium"
+        href="#">
+        <span class="material-symbols-outlined" data-icon="check_circle">check_circle</span>
+        <span>Tasks</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-md transition-all font-body-sm font-medium"
+        href="#">
+        <span class="material-symbols-outlined" data-icon="calendar_today">calendar_today</span>
+        <span>Calendar</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-md transition-all font-body-sm font-medium"
+        href="#">
+        <span class="material-symbols-outlined" data-icon="insights">insights</span>
+        <span>Analytics</span>
+      </a>
+    </div>
+    <div class="mt-auto flex flex-col gap-stack-xs pt-4 border-t border-slate-200">
+      <a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-md transition-all font-body-sm font-medium"
+        href="#">
+        <span class="material-symbols-outlined" data-icon="help_outline">help_outline</span>
+        <span>Help</span>
+      </a>
+      <a class="flex items-center gap-3 px-3 py-2 text-slate-600 hover:bg-slate-100 rounded-md transition-all font-body-sm font-medium"
+        href="#">
+        <span class="material-symbols-outlined" data-icon="logout">logout</span>
+        <span>Logout</span>
+      </a>
+    </div>
+  </aside>
+  <!-- Main Content -->
+  <main class="min-h-screen pt-24 pb-32 lg:pl-64 flex items-center justify-center px-margin-page">
+    <div class="max-w-2xl w-full">
+      <!-- New Task Card -->
+      <div class="bg-white rounded-xl shadow-[0_4px_12px_rgba(15,23,42,0.05)] overflow-hidden">
+        <div class="p-stack-lg">
+          <div class="flex items-center justify-between mb-stack-xl">
+            <div class="flex items-center gap-stack-md">
+              <div class="w-10 h-10 bg-surface-container-low rounded-lg flex items-center justify-center">
+                <span class="material-symbols-outlined text-primary-container" data-icon="add_task">add_task</span>
+              </div>
+              <h1 class="font-h2 text-h2 text-slate-900">Nueva Tarea</h1>
+            </div>
+            <button class="text-slate-400 hover:text-slate-600 transition-colors">
+              <span class="material-symbols-outlined" data-icon="close">close</span>
+            </button>
+          </div>
+          <form class="space-y-stack-lg">
+            <!-- Task Name -->
+            <div class="space-y-stack-sm">
+              <label class="block font-body-sm font-bold text-slate-700">Evento o tarea</label>
+              <input
+                class="w-full px-4 py-3 bg-surface-bright border border-slate-200 rounded-lg focus:ring-2 focus:ring-indigo-600/20 focus:border-indigo-600 outline-none transition-all font-body-md"
+                placeholder="¿Qué necesitas hacer?" required="" type="text" />
+            </div>
+            <!-- Date & Deadline Section -->
+            <div class="space-y-stack-md bg-slate-50 p-stack-md rounded-lg border border-slate-100">
+              <div class="flex items-center justify-between">
+                <div class="flex items-center gap-stack-sm">
+                  <span class="material-symbols-outlined text-slate-400" data-icon="event">event</span>
+                  <label class="font-body-sm font-bold text-slate-700">Fecha límite</label>
+                </div>
+                <div class="relative inline-block w-10 mr-2 align-middle select-none transition duration-200 ease-in">
+                  <input checked=""
+                    class="toggle-checkbox absolute block w-5 h-5 rounded-full bg-white border-2 border-slate-300 appearance-none cursor-pointer checked:right-0 checked:bg-indigo-600 checked:border-indigo-600 transition-all right-5"
+                    id="toggle" name="toggle" type="checkbox" />
+                  <label class="toggle-label block overflow-hidden h-5 rounded-full bg-slate-200 cursor-pointer"
+                    for="toggle"></label>
+                </div>
+              </div>
+              <div class="grid grid-cols-1 md:grid-cols-2 gap-stack-md">
+                <div class="space-y-stack-xs">
+                  <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Fecha</span>
+                  <div class="relative">
+                    <input
+                      class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg font-body-sm text-slate-700 focus:border-indigo-600 outline-none"
+                      type="date" />
+                  </div>
+                </div>
+                <div class="space-y-stack-xs">
+                  <span class="text-[10px] uppercase font-bold text-slate-400 tracking-wider">Hora</span>
+                  <div class="relative">
+                    <input
+                      class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-lg font-body-sm text-slate-700 focus:border-indigo-600 outline-none"
+                      type="time" />
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Additional Options Grid -->
+            <div class="grid grid-cols-2 gap-stack-md">
+              <div class="space-y-stack-sm">
+                <label class="block font-body-sm font-bold text-slate-700">Prioridad</label>
+                <select
+                  class="w-full px-4 py-2.5 bg-surface-bright border border-slate-200 rounded-lg font-body-sm text-slate-700 focus:border-indigo-600 outline-none appearance-none">
+                  <option>Baja</option>
+                  <option selected="">Media</option>
+                  <option>Alta</option>
+                </select>
+              </div>
+              <div class="space-y-stack-sm">
+                <label class="block font-body-sm font-bold text-slate-700">Categoría</label>
+                <select
+                  class="w-full px-4 py-2.5 bg-surface-bright border border-slate-200 rounded-lg font-body-sm text-slate-700 focus:border-indigo-600 outline-none appearance-none">
+                  <option>Trabajo</option>
+                  <option>Personal</option>
+                  <option>Estudios</option>
+                </select>
+              </div>
+            </div>
+            <!-- Submit Button -->
+            <div class="pt-stack-md">
+              <button
+                class="w-full bg-indigo-600 text-white py-4 rounded-xl font-h3 hover:bg-indigo-700 active:scale-[0.99] transition-all shadow-md shadow-indigo-200"
+                type="submit">
+                Guardar
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+      <!-- Contextual Hint -->
+      <p class="text-center mt-stack-lg text-slate-400 font-body-sm">
+        La tarea se sincronizará automáticamente con tu calendario.
+      </p>
+    </div>
+  </main>
+  <!-- BottomNavBar (Mobile Only) -->
+  <nav
+    class="fixed bottom-0 left-0 w-full z-50 flex justify-around items-center px-4 py-3 lg:hidden bg-white border-t border-slate-200 shadow-[0_-4px_12px_rgba(15,23,42,0.05)]">
+    <a class="flex flex-col items-center justify-center text-slate-400 active:scale-95 transition-transform" href="#">
+      <span class="material-symbols-outlined" data-icon="home">home</span>
+      <span class="font-manrope text-[10px] font-bold uppercase tracking-wider mt-1">Home</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-indigo-600 active:scale-95 transition-transform" href="#">
+      <span class="material-symbols-outlined" data-icon="list_alt">list_alt</span>
+      <span class="font-manrope text-[10px] font-bold uppercase tracking-wider mt-1">Tasks</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-slate-400 active:scale-95 transition-transform" href="#">
+      <span class="material-symbols-outlined" data-icon="timer">timer</span>
+      <span class="font-manrope text-[10px] font-bold uppercase tracking-wider mt-1">Focus</span>
+    </a>
+    <a class="flex flex-col items-center justify-center text-slate-400 active:scale-95 transition-transform" href="#">
+      <span class="material-symbols-outlined" data-icon="person">person</span>
+      <span class="font-manrope text-[10px] font-bold uppercase tracking-wider mt-1">Profile</span>
+    </a>
+  </nav>
+  <style>
+    .toggle-checkbox:checked {
+      @apply right-0 border-indigo-600 bg-indigo-600;
+    }
+
+    .toggle-checkbox:checked+.toggle-label {
+      @apply bg-indigo-100;
+    }
+  </style>
+</body>
+
+</html>
