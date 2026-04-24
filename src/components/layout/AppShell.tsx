@@ -15,7 +15,7 @@ export function AppShell() {
 
       {/* Fixed Top Header */}
       <header className="fixed top-0 w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-700">
-        <div className="max-w-[1280px] mx-auto flex justify-between items-center px-6 py-3">
+        <div className="max-w-7xl mx-auto flex justify-between items-center px-6 py-3">
 
           {/* Left: Logo + Nav */}
           <div className="flex items-center gap-8">
@@ -41,7 +41,7 @@ export function AppShell() {
           {/* Right: Search + Actions */}
           <div className="flex items-center gap-3">
             <div className="hidden lg:flex items-center bg-slate-100 dark:bg-slate-800 rounded-lg px-3 py-1.5 gap-2">
-              <Search size={16} className="text-slate-400 flex-shrink-0" />
+              <Search size={16} className="text-slate-400 shrink-0" />
               <input
                 type="text"
                 placeholder="Buscar..."
