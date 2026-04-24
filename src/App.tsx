@@ -6,7 +6,6 @@ import { AppShell } from '@/components/layout/AppShell'
 import { ErrorBoundary } from '@/components/layout/ErrorBoundary'
 
 const TaskListPage = lazy(() => import('./pages/TaskListPage').then(m => ({ default: m.TaskListPage })))
-const NewTaskPage = lazy(() => import('./pages/NewTaskPage').then(m => ({ default: m.NewTaskPage })))
 
 export default function App() {
   return (
@@ -17,7 +16,6 @@ export default function App() {
             <Routes>
               <Route path="/" element={<AppShell />}>
                 <Route index element={<TaskListPage />} />
-                <Route path="new" element={<NewTaskPage />} />
               </Route>
             </Routes>
           </Suspense>

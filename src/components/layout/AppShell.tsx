@@ -1,3 +1,4 @@
+import { useState, useEffect } from 'react'
 import { Outlet, Link } from 'react-router-dom'
 import {
   LayoutGrid, CheckCircle, Calendar, BarChart3,
@@ -6,9 +7,18 @@ import {
 } from 'lucide-react'
 import { ThemeToggle } from './ThemeToggle'
 import { useTheme } from '@/hooks/useTheme'
+import { NewTaskForm } from '@/components/forms/NewTaskForm'
 
 export function AppShell() {
   useTheme()
+  const [newTaskOpen, setNewTaskOpen] = useState(false)
+
+  useEffect(() => {
+    if (!newTaskOpen) return
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setNewTaskOpen(false) }
+    document.addEventListener('keydown', onKey)
+    return () => document.removeEventListener('keydown', onKey)
+  }, [newTaskOpen])
 
   return (
     <div className="min-h-screen bg-[#f8f9ff] text-on-surface dark:bg-slate-950 dark:text-slate-100 transition-colors duration-300">
@@ -57,13 +67,13 @@ export function AppShell() {
                 <Settings size={20} />
               </button>
             </div>
-            <Link
-              to="/new"
+            <button
+              onClick={() => setNewTaskOpen(true)}
               className="hidden md:flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors active:scale-[0.98]"
             >
-              <Plus size={16} />
+              <Plus size={16} aria-hidden="true" />
               Nueva tarea
-            </Link>
+            </button>
           </div>
         </div>
       </header>
@@ -143,13 +153,34 @@ export function AppShell() {
       </nav>
 
       {/* Mobile FAB */}
-      <Link
-        to="/new"
+      <button
+        onClick={() => setNewTaskOpen(true)}
         className="fixed bottom-24 right-6 w-14 h-14 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full flex items-center justify-center shadow-lg lg:hidden active:scale-95 transition-transform z-50"
         aria-label="Nueva tarea"
       >
-        <Plus size={24} />
-      </Link>
+        <Plus size={24} aria-hidden="true" />
+      </button>
+
+      {/* New Task Modal */}
+      {newTaskOpen && (
+        <>
+          <div
+            className="fixed inset-0 z-60 bg-slate-900/50 backdrop-blur-sm"
+            aria-hidden="true"
+            onClick={() => setNewTaskOpen(false)}
+          />
+          <div
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="new-task-title"
+            className="fixed inset-0 z-70 flex items-center justify-center p-4 pointer-events-none"
+          >
+            <div className="pointer-events-auto w-full max-w-xl overscroll-contain">
+              <NewTaskForm onClose={() => setNewTaskOpen(false)} />
+            </div>
+          </div>
+        </>
+      )}
     </div>
   )
 }
