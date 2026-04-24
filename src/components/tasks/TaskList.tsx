@@ -1,19 +1,23 @@
+import { useMemo } from 'react'
 import { SlidersHorizontal, ArrowUpDown } from 'lucide-react'
 import { useTasks } from '@/hooks/useTasks'
 import { TaskGroup } from './TaskGroup'
 
 export function TaskList() {
-  const { data: grouped } = useTasks()
+  const grouped = useTasks()
 
-  const totalTasks = grouped
-    ? grouped.urgent.length + grouped.later.length + grouped.expired.length + grouped.noDeadline.length
-    : 0
-  const completedCount = grouped?.completed.length ?? 0
-  const completionPct = totalTasks + completedCount > 0
-    ? Math.round((completedCount / (totalTasks + completedCount)) * 100)
-    : 0
-
-  const hasAnyTask = totalTasks > 0 || completedCount > 0
+  const totalTasks = useMemo(
+    () => grouped.urgent.length + grouped.later.length + grouped.expired.length + grouped.noDeadline.length,
+    [grouped]
+  )
+  const completedCount = useMemo(() => grouped.completed.length, [grouped])
+  const completionPct = useMemo(
+    () => totalTasks + completedCount > 0
+      ? Math.round((completedCount / (totalTasks + completedCount)) * 100)
+      : 0,
+    [totalTasks, completedCount]
+  )
+  const hasAnyTask = useMemo(() => totalTasks > 0 || completedCount > 0, [totalTasks, completedCount])
 
   return (
     <div className="max-w-4xl mx-auto px-6 md:px-10 py-8">
@@ -50,27 +54,27 @@ export function TaskList() {
 
       <TaskGroup
         title="Menos de 24 horas"
-        tasks={grouped?.urgent ?? []}
+        tasks={grouped.urgent}
         badgeClass="bg-[#ffdad6] text-[#93000a] dark:bg-red-900/30 dark:text-red-300"
       />
       <TaskGroup
         title="Más de 24 horas"
-        tasks={grouped?.later ?? []}
+        tasks={grouped.later}
         badgeClass="bg-surface-container-highest text-on-surface-variant dark:bg-slate-700 dark:text-slate-300"
       />
       <TaskGroup
         title="Vencidas"
-        tasks={grouped?.expired ?? []}
+        tasks={grouped.expired}
         badgeClass="bg-slate-100 text-slate-500 dark:bg-slate-700 dark:text-slate-400"
       />
       <TaskGroup
         title="Sin fecha"
-        tasks={grouped?.noDeadline ?? []}
+        tasks={grouped.noDeadline}
         badgeClass="bg-surface-container text-secondary dark:bg-slate-700 dark:text-slate-400"
       />
       <TaskGroup
         title="Completadas"
-        tasks={grouped?.completed ?? []}
+        tasks={grouped.completed}
         badgeClass="bg-slate-100 text-slate-500 dark:bg-slate-700 dark:text-slate-400"
       />
 

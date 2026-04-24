@@ -12,7 +12,7 @@ export function NewTaskForm() {
   const [hasDeadline, setHasDeadline] = useState(true)
   const [priority, setPriority] = useState<Priority>('medium')
   const [category, setCategory] = useState('Trabajo')
-  const { mutate: addTask, isPending } = useAddTask()
+  const addTask = useAddTask()
   const navigate = useNavigate()
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -24,10 +24,8 @@ export function NewTaskForm() {
       ? new Date(`${date}T${time}`).toISOString()
       : null
 
-    addTask(
-      { description: description.trim(), deadline, priority, category },
-      { onSuccess: () => navigate('/') }
-    )
+    addTask({ description: description.trim(), deadline, priority, category })
+    navigate('/')
   }
 
   const inputClass =
@@ -160,8 +158,7 @@ export function NewTaskForm() {
               <div className="pt-2">
                 <button
                   type="submit"
-                  disabled={isPending}
-                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-4 rounded-xl text-xl font-semibold active:scale-[0.99] transition-all shadow-md shadow-indigo-200/50 dark:shadow-none disabled:opacity-50"
+                  className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-4 rounded-xl text-xl font-semibold active:scale-[0.99] transition-all shadow-md shadow-indigo-200/50 dark:shadow-none"
                   style={{ fontFamily: 'Manrope, sans-serif' }}
                 >
                   Guardar
