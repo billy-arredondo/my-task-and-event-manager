@@ -37,3 +37,13 @@ Thumbs.db
 
 # Vite cache
 .vite/
+
+# skills.sh / Claude Code agent skills
+# Downloaded skill content — regenerado con `skills install` usando skills-lock.json
+# Tratar como node_modules: no versionar, sí skills-lock.json
+.agents/
+.claude/skills/
+.commandcode/skills/
+
+# Claude Code — configuración local de la máquina (nunca compartir)
+.claude/settings.local.json
