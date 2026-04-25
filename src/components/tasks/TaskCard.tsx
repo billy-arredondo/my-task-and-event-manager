@@ -1,4 +1,5 @@
 import { useCallback } from 'react'
+import { format } from 'date-fns'
 import { Check, Trash2, ChevronRight } from 'lucide-react'
 import { CountdownDisplay } from './CountdownDisplay'
 import { useCountdown } from '@/hooks/useCountdown'
@@ -35,13 +36,20 @@ export function TaskCard({ task }: Props) {
         >
           {task.completed && <Check size={11} className="text-white" strokeWidth={3} />}
         </button>
-        <span
-          className={`font-medium text-slate-900 dark:text-slate-100 truncate ${
-            task.completed ? 'line-through opacity-40' : ''
-          }`}
-        >
-          {task.description}
-        </span>
+        <div className="min-w-0 flex flex-col gap-0.5">
+          <span
+            className={`font-medium text-slate-900 dark:text-slate-100 truncate ${
+              task.completed ? 'line-through opacity-40' : ''
+            }`}
+          >
+            {task.description}
+          </span>
+          {task.deadline && (
+            <span className="text-xs text-slate-400 dark:text-slate-500">
+              {format(new Date(task.deadline), 'yyyy-MM-dd HH:mm')}
+            </span>
+          )}
+        </div>
       </div>
 
       <div className="flex items-center gap-3 shrink-0 ml-4">
