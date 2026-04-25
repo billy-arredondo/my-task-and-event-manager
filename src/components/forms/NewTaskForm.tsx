@@ -77,10 +77,10 @@ export function NewTaskForm({ onClose, taskToEdit = null }: Props) {
   }
 
   const inputClass =
-    'w-full px-4 py-3 bg-[#f8f9ff] dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg focus-visible:ring-2 focus-visible:ring-indigo-600/20 focus-visible:border-indigo-600 outline-none transition-[border-color,box-shadow] text-sm text-slate-700 dark:text-slate-200 placeholder:text-slate-400'
+    'w-full px-4 py-3 bg-[#f8f9ff] dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg focus-visible:ring-2 focus-visible:ring-indigo-600/20 focus-visible:border-indigo-600 outline-none transition-[border-color,box-shadow] text-base text-slate-700 dark:text-slate-200 placeholder:text-slate-400'
 
   const selectClass =
-    'w-full px-4 py-2.5 bg-[#f8f9ff] dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-sm text-slate-700 dark:text-slate-200 focus-visible:border-indigo-600 outline-none appearance-none cursor-pointer'
+    'w-full px-4 py-2.5 bg-[#f8f9ff] dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-base text-slate-700 dark:text-slate-200 focus-visible:border-indigo-600 outline-none appearance-none cursor-pointer'
 
   return (
     <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_8px_32px_rgba(15,23,42,0.15)] dark:shadow-none dark:border dark:border-slate-700 overflow-hidden">
