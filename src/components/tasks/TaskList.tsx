@@ -90,23 +90,23 @@ export function TaskList({ onTaskClick }: Props) {
 
       {/* Progress Card */}
       {hasAnyTask && (
-        <div className="mt-12 p-8 rounded-3xl bg-indigo-600 text-white flex items-center justify-between overflow-hidden relative">
+        <div className="mt-12 p-8 rounded-3xl border-2 border-indigo-600 text-indigo-600 flex items-center justify-between overflow-hidden relative">
           <div className="z-10 max-w-md">
             <h3 className="text-2xl font-semibold mb-2" style={{ fontFamily: 'Manrope, sans-serif' }}>
               {completionPct >= 80 ? '¡Casi terminas!' : '¡Sigue adelante!'}
             </h3>
-            <p className="text-indigo-100 mb-6">
+            <p className="text-indigo-400 mb-6">
               {completedCount > 0
                 ? `Has completado ${completionPct}% de tus tareas. Mantén el ritmo y finaliza tus pendientes.`
                 : 'Organiza tu flujo de trabajo y mantén el enfoque en tus objetivos.'}
             </p>
-            <div className="w-full bg-indigo-900/30 rounded-full h-2 mb-2">
+            <div className="w-full bg-indigo-100 rounded-full h-2 mb-2">
               <div
-                className="bg-white h-2 rounded-full transition-all duration-500"
+                className="bg-indigo-600 h-2 rounded-full transition-all duration-500"
                 style={{ width: `${completionPct || 5}%` }}
               />
             </div>
-            <span className="text-xs font-bold uppercase tracking-wider text-indigo-200">
+            <span className="text-xs font-bold uppercase tracking-wider text-indigo-400">
               Progreso Diario
             </span>
           </div>
