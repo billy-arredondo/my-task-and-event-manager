@@ -5,9 +5,15 @@ interface Props {
   title: string
   tasks: Task[]
   badgeClass?: string
+  onTaskClick: (task: Task) => void
 }
 
-export function TaskGroup({ title, tasks, badgeClass = 'bg-surface-container-highest text-on-surface-variant dark:bg-slate-700 dark:text-slate-300' }: Props) {
+export function TaskGroup({
+  title,
+  tasks,
+  badgeClass = 'bg-surface-container-highest text-on-surface-variant dark:bg-slate-700 dark:text-slate-300',
+  onTaskClick,
+}: Props) {
   if (tasks.length === 0) return null
 
   return (
@@ -23,7 +29,7 @@ export function TaskGroup({ title, tasks, badgeClass = 'bg-surface-container-hig
       <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0px_4px_12px_rgba(15,23,42,0.05)] dark:shadow-none dark:border dark:border-slate-700 overflow-hidden">
         <div className="divide-y divide-slate-100 dark:divide-slate-700">
           {tasks.map((task) => (
-            <TaskCard key={task.id} task={task} />
+            <TaskCard key={task.id} task={task} onClick={onTaskClick} />
           ))}
         </div>
       </div>

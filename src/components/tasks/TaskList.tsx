@@ -2,8 +2,13 @@ import { useMemo } from 'react'
 import { SlidersHorizontal, ArrowUpDown } from 'lucide-react'
 import { useTasks } from '@/hooks/useTasks'
 import { TaskGroup } from './TaskGroup'
+import type { Task } from '@/types/task'
 
-export function TaskList() {
+interface Props {
+  onTaskClick: (task: Task) => void
+}
+
+export function TaskList({ onTaskClick }: Props) {
   const grouped = useTasks()
 
   const totalTasks = useMemo(
@@ -56,26 +61,31 @@ export function TaskList() {
         title="Menos de 24 horas"
         tasks={grouped.urgent}
         badgeClass="bg-[#ffdad6] text-[#93000a] dark:bg-red-900/30 dark:text-red-300"
+        onTaskClick={onTaskClick}
       />
       <TaskGroup
         title="Más de 24 horas"
         tasks={grouped.later}
         badgeClass="bg-surface-container-highest text-on-surface-variant dark:bg-slate-700 dark:text-slate-300"
+        onTaskClick={onTaskClick}
       />
       <TaskGroup
         title="Vencidas"
         tasks={grouped.expired}
         badgeClass="bg-slate-100 text-slate-500 dark:bg-slate-700 dark:text-slate-400"
+        onTaskClick={onTaskClick}
       />
       <TaskGroup
         title="Sin fecha"
         tasks={grouped.noDeadline}
         badgeClass="bg-surface-container text-secondary dark:bg-slate-700 dark:text-slate-400"
+        onTaskClick={onTaskClick}
       />
       <TaskGroup
         title="Completadas"
         tasks={grouped.completed}
         badgeClass="bg-slate-100 text-slate-500 dark:bg-slate-700 dark:text-slate-400"
+        onTaskClick={onTaskClick}
       />
 
       {/* Progress Card */}

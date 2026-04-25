@@ -5,6 +5,7 @@ import type { Task } from '@/types/task'
 interface TaskState {
   tasks: Task[]
   addTask: (input: Omit<Task, 'id' | 'createdAt' | 'completed'>) => void
+  updateTask: (id: string, input: Omit<Task, 'id' | 'createdAt' | 'completed'>) => void
   deleteTask: (id: string) => void
   toggleComplete: (id: string) => void
 }
@@ -24,6 +25,17 @@ export const useTaskStore = create<TaskState>()(
               createdAt: new Date().toISOString(),
             },
           ],
+        })),
+      updateTask: (id, input) =>
+        set((state) => ({
+          tasks: state.tasks.map((task) =>
+            task.id === id
+              ? {
+                ...task,
+                ...input,
+              }
+              : task
+          ),
         })),
       deleteTask: (id) =>
         set((state) => ({

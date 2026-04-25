@@ -1,14 +1,17 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { format } from 'date-fns'
 import { X, ClipboardList, Calendar } from 'lucide-react'
 import { useAddTask } from '@/hooks/useAddTask'
+import { useUpdateTask } from '@/hooks/useUpdateTask'
 import { Switch } from '@/components/ui/switch'
-import type { Priority } from '@/types/task'
+import type { Priority, Task } from '@/types/task'
 
 interface Props {
   onClose: () => void
+  taskToEdit?: Task | null
 }
 
-export function NewTaskForm({ onClose }: Props) {
+export function NewTaskForm({ onClose, taskToEdit = null }: Props) {
   const [description, setDescription] = useState('')
   const [date, setDate] = useState('')
   const [time, setTime] = useState('')
@@ -16,6 +19,44 @@ export function NewTaskForm({ onClose }: Props) {
   const [priority, setPriority] = useState<Priority>('medium')
   const [category, setCategory] = useState('Trabajo')
   const addTask = useAddTask()
+  const updateTask = useUpdateTask()
+
+  useEffect(() => {
+    if (!taskToEdit) {
+      setDescription('')
+      setDate('')
+      setTime('')
+      setHasDeadline(true)
+      setPriority('medium')
+      setCategory('Trabajo')
+      return
+    }
+
+    setDescription(taskToEdit.description)
+    setPriority(taskToEdit.priority ?? 'medium')
+    setCategory(taskToEdit.category ?? 'Trabajo')
+
+    if (!taskToEdit.deadline) {
+      setHasDeadline(false)
+      setDate('')
+      setTime('')
+      return
+    }
+
+    const deadline = new Date(taskToEdit.deadline)
+    if (Number.isNaN(deadline.getTime())) {
+      setHasDeadline(false)
+      setDate('')
+      setTime('')
+      return
+    }
+
+    setHasDeadline(true)
+    setDate(format(deadline, 'yyyy-MM-dd'))
+    setTime(format(deadline, 'HH:mm'))
+  }, [taskToEdit])
+
+  const isEditMode = taskToEdit !== null
 
   const handleSubmit = (e: { preventDefault(): void }) => {
     e.preventDefault()
@@ -26,7 +67,14 @@ export function NewTaskForm({ onClose }: Props) {
       ? new Date(`${date}T${time}`).toISOString()
       : null
 
-    addTask({ description: description.trim(), deadline, priority, category })
+    const payload = { description: description.trim(), deadline, priority, category }
+
+    if (isEditMode) {
+      updateTask(taskToEdit.id, payload)
+    } else {
+      addTask(payload)
+    }
+
     onClose()
   }
 
@@ -47,11 +95,11 @@ export function NewTaskForm({ onClose }: Props) {
               <ClipboardList size={18} className="text-primary-container dark:text-indigo-400" aria-hidden="true" />
             </div>
             <h2
-              id="new-task-title"
+              id="task-form-title"
               className="text-xl font-semibold text-slate-900 dark:text-slate-100"
               style={{ fontFamily: 'Manrope, sans-serif' }}
             >
-              Nueva Tarea
+              {isEditMode ? 'Editar Tarea' : 'Nueva Tarea'}
             </h2>
           </div>
           <button
@@ -177,7 +225,7 @@ export function NewTaskForm({ onClose }: Props) {
               className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3.5 rounded-xl text-base font-semibold active:scale-[0.99] transition-[background-color,transform,box-shadow] shadow-md shadow-indigo-200/50 dark:shadow-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-600 outline-none"
               style={{ fontFamily: 'Manrope, sans-serif' }}
             >
-              Guardar
+              {isEditMode ? 'Actualizar' : 'Guardar'}
             </button>
           </div>
         </form>

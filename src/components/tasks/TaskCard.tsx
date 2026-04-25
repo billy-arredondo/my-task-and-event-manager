@@ -9,21 +9,29 @@ import type { Task } from '@/types/task'
 
 interface Props {
   task: Task
+  onClick: (task: Task) => void
 }
 
-export function TaskCard({ task }: Props) {
+export function TaskCard({ task, onClick }: Props) {
   const countdown = useCountdown(task.deadline)
   const deleteTask = useDeleteTask()
   const toggleComplete = useToggleComplete()
 
-  const handleToggle = useCallback(() => toggleComplete(task.id), [toggleComplete, task.id])
+  const handleToggle = useCallback((e: React.MouseEvent) => {
+    e.stopPropagation()
+    toggleComplete(task.id)
+  }, [toggleComplete, task.id])
   const handleDelete = useCallback((e: React.MouseEvent) => {
     e.stopPropagation()
     deleteTask(task.id)
   }, [deleteTask, task.id])
+  const handleClick = useCallback(() => onClick(task), [onClick, task])
 
   return (
-    <div className="group flex items-center justify-between p-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer">
+    <div
+      className="group flex items-center justify-between p-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer"
+      onClick={handleClick}
+    >
       <div className="flex items-center gap-4 flex-1 min-w-0">
         <button
           onClick={handleToggle}

@@ -8,14 +8,35 @@ import {
 import { ThemeToggle } from './ThemeToggle'
 import { useTheme } from '@/hooks/useTheme'
 import { NewTaskForm } from '@/components/forms/NewTaskForm'
+import type { Task } from '@/types/task'
+
+export interface AppShellOutletContext {
+  openEditTaskModal: (task: Task) => void
+}
 
 export function AppShell() {
   useTheme()
   const [newTaskOpen, setNewTaskOpen] = useState(false)
+  const [taskToEdit, setTaskToEdit] = useState<Task | null>(null)
+
+  const closeTaskModal = () => {
+    setNewTaskOpen(false)
+    setTaskToEdit(null)
+  }
+
+  const openNewTaskModal = () => {
+    setTaskToEdit(null)
+    setNewTaskOpen(true)
+  }
+
+  const openEditTaskModal = (task: Task) => {
+    setTaskToEdit(task)
+    setNewTaskOpen(true)
+  }
 
   useEffect(() => {
     if (!newTaskOpen) return
-    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') setNewTaskOpen(false) }
+    const onKey = (e: KeyboardEvent) => { if (e.key === 'Escape') closeTaskModal() }
     document.addEventListener('keydown', onKey)
     return () => document.removeEventListener('keydown', onKey)
   }, [newTaskOpen])
@@ -68,7 +89,7 @@ export function AppShell() {
               </button>
             </div>
             <button
-              onClick={() => setNewTaskOpen(true)}
+              onClick={openNewTaskModal}
               className="hidden md:flex items-center gap-2 bg-indigo-600 hover:bg-indigo-700 text-white px-4 py-2 rounded-lg text-sm font-semibold transition-colors active:scale-[0.98]"
             >
               <Plus size={16} aria-hidden="true" />
@@ -129,7 +150,7 @@ export function AppShell() {
 
       {/* Main Content */}
       <main className="lg:pl-64 pt-20 pb-24 md:pb-8 min-h-screen">
-        <Outlet />
+        <Outlet context={{ openEditTaskModal } satisfies AppShellOutletContext} />
       </main>
 
       {/* Mobile Bottom Nav */}
@@ -154,7 +175,7 @@ export function AppShell() {
 
       {/* Mobile FAB */}
       <button
-        onClick={() => setNewTaskOpen(true)}
+        onClick={openNewTaskModal}
         className="fixed bottom-24 right-6 w-14 h-14 bg-indigo-600 hover:bg-indigo-700 text-white rounded-full flex items-center justify-center shadow-lg lg:hidden active:scale-95 transition-transform z-50"
         aria-label="Nueva tarea"
       >
@@ -167,16 +188,16 @@ export function AppShell() {
           <div
             className="fixed inset-0 z-60 bg-slate-900/50 backdrop-blur-sm"
             aria-hidden="true"
-            onClick={() => setNewTaskOpen(false)}
+            onClick={closeTaskModal}
           />
           <div
             role="dialog"
             aria-modal="true"
-            aria-labelledby="new-task-title"
+            aria-labelledby="task-form-title"
             className="fixed inset-0 z-70 flex items-center justify-center p-4 pointer-events-none"
           >
             <div className="pointer-events-auto w-full max-w-xl overscroll-contain">
-              <NewTaskForm onClose={() => setNewTaskOpen(false)} />
+              <NewTaskForm onClose={closeTaskModal} taskToEdit={taskToEdit} />
             </div>
           </div>
         </>
