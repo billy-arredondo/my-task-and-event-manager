@@ -1,6 +1,16 @@
 import { useState, useEffect, useRef } from 'react'
 import { differenceInSeconds, differenceInDays, differenceInWeeks } from 'date-fns'
 import type { CountdownValue } from '@/types/task'
+import { subscribe } from '@/lib/clock'
+
+function equal(a: CountdownValue, b: CountdownValue): boolean {
+  if (a.type !== b.type) return false
+  if (a.type === 'countdown' && b.type === 'countdown')
+    return a.hours === b.hours && a.minutes === b.minutes && a.seconds === b.seconds
+  if (a.type === 'days' && b.type === 'days') return a.days === b.days
+  if (a.type === 'weeks' && b.type === 'weeks') return a.weeks === b.weeks
+  return true
+}
 
 export function useCountdown(deadline: string | null): CountdownValue {
   const deadlineRef = useRef<Date | null>(deadline ? new Date(deadline) : null)
@@ -44,9 +54,10 @@ export function useCountdown(deadline: string | null): CountdownValue {
 
     if (totalSeconds <= 0) return
 
-    const interval = totalSeconds < 86400 ? 1000 : 60_000
-    const id = setInterval(() => setValue(compute()), interval)
-    return () => clearInterval(id)
+    return subscribe(() => {
+      const next = compute()
+      setValue(prev => equal(prev, next) ? prev : next)
+    })
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [deadline])
 
