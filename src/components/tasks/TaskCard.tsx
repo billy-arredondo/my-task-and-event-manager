@@ -3,8 +3,7 @@ import { format } from 'date-fns'
 import { Check, Trash2, ChevronRight } from 'lucide-react'
 import { CountdownDisplay } from './CountdownDisplay'
 import { useCountdown } from '@/hooks/useCountdown'
-import { useDeleteTask } from '@/hooks/useDeleteTask'
-import { useToggleComplete } from '@/hooks/useToggleComplete'
+import { useTaskActions } from '@/hooks/useTaskActions'
 import type { Task } from '@/types/task'
 
 interface Props {
@@ -14,8 +13,7 @@ interface Props {
 
 export function TaskCard({ task, onClick }: Props) {
   const countdown = useCountdown(task.deadline)
-  const deleteTask = useDeleteTask()
-  const toggleComplete = useToggleComplete()
+  const { deleteTask, toggleComplete } = useTaskActions()
 
   const handleToggle = useCallback((e: React.MouseEvent) => {
     e.stopPropagation()
