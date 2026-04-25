@@ -1,8 +1,7 @@
 import { useEffect, useState } from 'react'
 import { format } from 'date-fns'
 import { X, ClipboardList, Calendar } from 'lucide-react'
-import { useAddTask } from '@/hooks/useAddTask'
-import { useUpdateTask } from '@/hooks/useUpdateTask'
+import { useTaskActions } from '@/hooks/useTaskActions'
 import { Switch } from '@/components/ui/switch'
 import type { Priority, Task } from '@/types/task'
 
@@ -18,8 +17,7 @@ export function NewTaskForm({ onClose, taskToEdit = null }: Props) {
   const [hasDeadline, setHasDeadline] = useState(true)
   const [priority, setPriority] = useState<Priority>('medium')
   const [category, setCategory] = useState('Trabajo')
-  const addTask = useAddTask()
-  const updateTask = useUpdateTask()
+  const { addTask, updateTask } = useTaskActions()
 
   useEffect(() => {
     if (!taskToEdit) {
