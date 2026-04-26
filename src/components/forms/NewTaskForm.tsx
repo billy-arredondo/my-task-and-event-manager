@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { format } from 'date-fns'
-import { X, ClipboardList, Calendar } from 'lucide-react'
+import { X, ClipboardList, Calendar, Trash2 } from 'lucide-react'
 import { useTaskActions } from '@/hooks/useTaskActions'
 import { Switch } from '@/components/ui/switch'
 import type { Priority, Task } from '@/types/task'
@@ -17,7 +17,14 @@ export function NewTaskForm({ onClose, taskToEdit = null }: Props) {
   const [hasDeadline, setHasDeadline] = useState(true)
   const [priority, setPriority] = useState<Priority>('medium')
   const [category, setCategory] = useState('Trabajo')
-  const { addTask, updateTask } = useTaskActions()
+  const { addTask, updateTask, deleteTask } = useTaskActions()
+
+  const handleDelete = () => {
+    if (taskToEdit) {
+      deleteTask(taskToEdit.id)
+      onClose()
+    }
+  }
 
   useEffect(() => {
     if (!taskToEdit) {
@@ -55,6 +62,7 @@ export function NewTaskForm({ onClose, taskToEdit = null }: Props) {
   }, [taskToEdit])
 
   const isEditMode = taskToEdit !== null
+  const isTouchDevice = window.matchMedia('(hover: none)').matches
 
   const handleSubmit = (e: { preventDefault(): void }) => {
     e.preventDefault()
@@ -121,7 +129,7 @@ export function NewTaskForm({ onClose, taskToEdit = null }: Props) {
               name="description"
               autoComplete="off"
               // eslint-disable-next-line jsx-a11y/no-autofocus
-              autoFocus
+              autoFocus={!isTouchDevice}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="¿Qué necesitas hacer?…"
@@ -217,7 +225,7 @@ export function NewTaskForm({ onClose, taskToEdit = null }: Props) {
           </div>
 
           {/* Submit */}
-          <div className="pt-1">
+          <div className="pt-1 space-y-3">
             <button
               type="submit"
               className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3.5 rounded-xl text-base font-semibold active:scale-[0.99] transition-[background-color,transform,box-shadow] shadow-md shadow-indigo-200/50 dark:shadow-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-600 outline-none"
@@ -225,6 +233,17 @@ export function NewTaskForm({ onClose, taskToEdit = null }: Props) {
             >
               {isEditMode ? 'Actualizar' : 'Guardar'}
             </button>
+
+            {isEditMode && (
+              <button
+                type="button"
+                onClick={handleDelete}
+                className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-base font-semibold text-indigo-600 border border-indigo-600 hover:bg-indigo-50 dark:border-indigo-500 dark:text-indigo-400 dark:hover:bg-indigo-900/20 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-indigo-600/40"
+              >
+                <Trash2 size={15} />
+                Eliminar tarea
+              </button>
+            )}
           </div>
         </form>
       </div>
