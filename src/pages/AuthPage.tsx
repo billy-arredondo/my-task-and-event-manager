@@ -3,10 +3,13 @@ import { Navigate } from 'react-router-dom'
 import { Layers } from 'lucide-react'
 import { supabase } from '@/lib/supabase'
 import { useAuthStore } from '@/store/authStore'
+import { useTheme } from '@/hooks/useTheme'
+import { ThemeToggle } from '@/components/layout/ThemeToggle'
 
 type Mode = 'login' | 'signup'
 
 export function AuthPage() {
+  useTheme()
   const session = useAuthStore((s) => s.session)
   const [mode, setMode] = useState<Mode>('login')
   const [email, setEmail] = useState('')
@@ -40,10 +43,10 @@ export function AuthPage() {
   }
 
   const inputClass =
-    'w-full px-4 py-3 bg-[#f8f9ff] border border-slate-200 rounded-lg focus-visible:ring-2 focus-visible:ring-indigo-600/20 focus-visible:border-indigo-600 outline-none transition-[border-color,box-shadow] text-base text-slate-700 placeholder:text-slate-400'
+    'w-full px-4 py-3 bg-[#f8f9ff] dark:bg-slate-800 border border-slate-200 dark:border-slate-700 rounded-lg focus-visible:ring-2 focus-visible:ring-indigo-600/20 focus-visible:border-indigo-600 outline-none transition-[border-color,box-shadow] text-base text-slate-700 dark:text-slate-200 placeholder:text-slate-400 dark:placeholder:text-slate-500'
 
   return (
-    <div className="min-h-screen bg-[#f8f9ff] flex items-center justify-center p-4">
+    <div className="min-h-screen bg-[#f8f9ff] dark:bg-slate-950 flex items-center justify-center p-4 transition-colors duration-300">
       <div className="w-full max-w-sm">
 
         {/* Logo */}
@@ -51,20 +54,20 @@ export function AuthPage() {
           <div className="w-12 h-12 bg-indigo-600 rounded-xl flex items-center justify-center">
             <Layers size={24} className="text-white" />
           </div>
-          <h1 className="text-2xl font-bold text-slate-900" style={{ fontFamily: 'Manrope, sans-serif' }}>
+          <h1 className="text-2xl font-bold text-slate-900 dark:text-slate-100" style={{ fontFamily: 'Manrope, sans-serif' }}>
             FocusFlow
           </h1>
         </div>
 
         {/* Card */}
-        <div className="bg-white rounded-2xl shadow-[0_8px_32px_rgba(15,23,42,0.10)] p-8">
-          <h2 className="text-lg font-semibold text-slate-900 mb-6" style={{ fontFamily: 'Manrope, sans-serif' }}>
+        <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-[0_8px_32px_rgba(15,23,42,0.10)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.40)] p-8">
+          <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-6" style={{ fontFamily: 'Manrope, sans-serif' }}>
             {mode === 'login' ? 'Iniciar sesión' : 'Crear cuenta'}
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
             <div className="space-y-1.5">
-              <label htmlFor="auth-email" className="block text-sm font-semibold text-slate-700">
+              <label htmlFor="auth-email" className="block text-sm font-semibold text-slate-700 dark:text-slate-300">
                 Correo electrónico
               </label>
               <input
@@ -80,7 +83,7 @@ export function AuthPage() {
             </div>
 
             <div className="space-y-1.5">
-              <label htmlFor="auth-password" className="block text-sm font-semibold text-slate-700">
+              <label htmlFor="auth-password" className="block text-sm font-semibold text-slate-700 dark:text-slate-300">
                 Contraseña
               </label>
               <input
@@ -97,13 +100,13 @@ export function AuthPage() {
             </div>
 
             {error && (
-              <p className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-lg px-3 py-2">
+              <p className="text-sm text-red-600 bg-red-50 dark:bg-red-950/40 border border-red-100 dark:border-red-900 rounded-lg px-3 py-2">
                 {error}
               </p>
             )}
 
             {message && (
-              <p className="text-sm text-emerald-700 bg-emerald-50 border border-emerald-100 rounded-lg px-3 py-2">
+              <p className="text-sm text-emerald-700 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-950/40 border border-emerald-100 dark:border-emerald-900 rounded-lg px-3 py-2">
                 {message}
               </p>
             )}
@@ -118,16 +121,21 @@ export function AuthPage() {
             </button>
           </form>
 
-          <p className="text-center text-sm text-slate-500 mt-6">
+          <p className="text-center text-sm text-slate-500 dark:text-slate-400 mt-6">
             {mode === 'login' ? '¿No tienes cuenta?' : '¿Ya tienes cuenta?'}{' '}
             <button
               onClick={() => { setMode(mode === 'login' ? 'signup' : 'login'); setError(null); setMessage(null) }}
-              className="text-indigo-600 font-semibold hover:underline"
+              className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline"
             >
               {mode === 'login' ? 'Regístrate' : 'Inicia sesión'}
             </button>
           </p>
         </div>
+      </div>
+
+      {/* Theme toggle — bottom-left */}
+      <div className="fixed bottom-6 left-6">
+        <ThemeToggle />
       </div>
     </div>
   )
