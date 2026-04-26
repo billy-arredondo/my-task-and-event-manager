@@ -16,6 +16,13 @@ export interface AppShellOutletContext {
   openEditTaskModal: (task: Task) => void
 }
 
+const features = {
+  dashboard: import.meta.env.VITE_FEATURE_DASHBOARD === 'true',
+  tasks: import.meta.env.VITE_FEATURE_TASKS === 'true',
+  calendar: import.meta.env.VITE_FEATURE_CALENDAR === 'true',
+  analytics: import.meta.env.VITE_FEATURE_ANALYTICS === 'true',
+}
+
 export function AppShell() {
   useTheme()
   const user = useAuthStore((s) => s.user)
@@ -59,18 +66,26 @@ export function AppShell() {
               FocusFlow
             </Link>
             <nav className="hidden md:flex gap-8">
-              <a href="#" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors text-sm font-medium">
-                Dashboard
-              </a>
-              <Link to="/" className="text-indigo-600 dark:text-indigo-400 font-semibold border-b-2 border-indigo-600 dark:border-indigo-400 text-sm pb-0.5">
-                Tasks
-              </Link>
-              <a href="#" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors text-sm font-medium">
-                Calendar
-              </a>
-              <a href="#" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors text-sm font-medium">
-                Analytics
-              </a>
+              {features.dashboard && (
+                <a href="#" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors text-sm font-medium">
+                  Dashboard
+                </a>
+              )}
+              {features.tasks && (
+                <Link to="/" className="text-indigo-600 dark:text-indigo-400 font-semibold border-b-2 border-indigo-600 dark:border-indigo-400 text-sm pb-0.5">
+                  Tasks
+                </Link>
+              )}
+              {features.calendar && (
+                <a href="#" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors text-sm font-medium">
+                  Calendar
+                </a>
+              )}
+              {features.analytics && (
+                <a href="#" className="text-slate-500 dark:text-slate-400 hover:text-slate-900 dark:hover:text-slate-100 transition-colors text-sm font-medium">
+                  Analytics
+                </a>
+              )}
             </nav>
           </div>
 
@@ -123,22 +138,30 @@ export function AppShell() {
         </div>
 
         <nav className="flex-1 space-y-1">
-          <a href="#" className="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:translate-x-0.5 transition-all rounded-md font-medium text-sm">
-            <LayoutGrid size={18} />
-            Dashboard
-          </a>
-          <Link to="/" className="flex items-center gap-3 px-3 py-2.5 bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm rounded-md font-medium text-sm">
-            <CheckCircle size={18} />
-            Tasks
-          </Link>
-          <a href="#" className="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:translate-x-0.5 transition-all rounded-md font-medium text-sm">
-            <Calendar size={18} />
-            Calendar
-          </a>
-          <a href="#" className="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:translate-x-0.5 transition-all rounded-md font-medium text-sm">
-            <BarChart3 size={18} />
-            Analytics
-          </a>
+          {features.dashboard && (
+            <a href="#" className="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:translate-x-0.5 transition-all rounded-md font-medium text-sm">
+              <LayoutGrid size={18} />
+              Dashboard
+            </a>
+          )}
+          {features.tasks && (
+            <Link to="/" className="flex items-center gap-3 px-3 py-2.5 bg-white dark:bg-slate-800 text-indigo-600 dark:text-indigo-400 shadow-sm rounded-md font-medium text-sm">
+              <CheckCircle size={18} />
+              Tasks
+            </Link>
+          )}
+          {features.calendar && (
+            <a href="#" className="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:translate-x-0.5 transition-all rounded-md font-medium text-sm">
+              <Calendar size={18} />
+              Calendar
+            </a>
+          )}
+          {features.analytics && (
+            <a href="#" className="flex items-center gap-3 px-3 py-2.5 text-slate-600 dark:text-slate-400 hover:bg-slate-100 dark:hover:bg-slate-800 hover:translate-x-0.5 transition-all rounded-md font-medium text-sm">
+              <BarChart3 size={18} />
+              Analytics
+            </a>
+          )}
         </nav>
 
         <div className="pt-4 border-t border-slate-200 dark:border-slate-700 space-y-1">
@@ -167,10 +190,12 @@ export function AppShell() {
           <Home size={22} />
           <span className="text-[10px] font-bold uppercase tracking-wider mt-1">Home</span>
         </a>
-        <Link to="/" className="flex flex-col items-center text-indigo-600 dark:text-indigo-400 active:scale-95 transition-transform">
-          <ListChecks size={22} />
-          <span className="text-[10px] font-bold uppercase tracking-wider mt-1">Tasks</span>
-        </Link>
+        {features.tasks && (
+          <Link to="/" className="flex flex-col items-center text-indigo-600 dark:text-indigo-400 active:scale-95 transition-transform">
+            <ListChecks size={22} />
+            <span className="text-[10px] font-bold uppercase tracking-wider mt-1">Tasks</span>
+          </Link>
+        )}
         <a href="#" className="flex flex-col items-center text-slate-400 dark:text-slate-500 active:scale-95 transition-transform">
           <Timer size={22} />
           <span className="text-[10px] font-bold uppercase tracking-wider mt-1">Focus</span>
