@@ -1,6 +1,6 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useState, useCallback } from 'react'
 import { format } from 'date-fns'
-import { X, ClipboardList, Calendar } from 'lucide-react'
+import { X, ClipboardList, Calendar, Trash2 } from 'lucide-react'
 import { useTaskActions } from '@/hooks/useTaskActions'
 import { Switch } from '@/components/ui/switch'
 import type { Priority, Task } from '@/types/task'
@@ -17,7 +17,15 @@ export function NewTaskForm({ onClose, taskToEdit = null }: Props) {
   const [hasDeadline, setHasDeadline] = useState(true)
   const [priority, setPriority] = useState<Priority>('medium')
   const [category, setCategory] = useState('Trabajo')
-  const { addTask, updateTask } = useTaskActions()
+  const [submitError, setSubmitError] = useState<string | null>(null)
+  const { addTask, updateTask, deleteTask } = useTaskActions()
+
+  const handleDelete = () => {
+    if (taskToEdit) {
+      deleteTask(taskToEdit.id)
+      onClose()
+    }
+  }
 
   useEffect(() => {
     if (!taskToEdit) {
@@ -55,8 +63,11 @@ export function NewTaskForm({ onClose, taskToEdit = null }: Props) {
   }, [taskToEdit])
 
   const isEditMode = taskToEdit !== null
+  const isTouchDevice = typeof window !== 'undefined' && typeof window.matchMedia === 'function'
+    ? window.matchMedia('(hover: none)').matches
+    : false
 
-  const handleSubmit = (e: { preventDefault(): void }) => {
+  const handleSubmit = useCallback(async (e: { preventDefault(): void }) => {
     e.preventDefault()
     if (!description.trim()) return
     if (hasDeadline && (!date || !time)) return
@@ -67,20 +78,24 @@ export function NewTaskForm({ onClose, taskToEdit = null }: Props) {
 
     const payload = { description: description.trim(), deadline, priority, category }
 
-    if (isEditMode) {
-      updateTask(taskToEdit.id, payload)
-    } else {
-      addTask(payload)
+    try {
+      setSubmitError(null)
+      if (isEditMode) {
+        await updateTask(taskToEdit.id, payload)
+      } else {
+        await addTask(payload)
+      }
+      onClose()
+    } catch (err) {
+      setSubmitError(err instanceof Error ? err.message : 'Error al guardar la tarea')
     }
-
-    onClose()
-  }
+  }, [description, hasDeadline, date, time, priority, category, isEditMode, taskToEdit, addTask, updateTask, onClose])
 
   const inputClass =
-    'w-full px-4 py-3 bg-[#f8f9ff] dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg focus-visible:ring-2 focus-visible:ring-indigo-600/20 focus-visible:border-indigo-600 outline-none transition-[border-color,box-shadow] text-sm text-slate-700 dark:text-slate-200 placeholder:text-slate-400'
+    'w-full px-4 py-3 bg-[#f8f9ff] dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg focus-visible:ring-2 focus-visible:ring-indigo-600/20 focus-visible:border-indigo-600 outline-none transition-[border-color,box-shadow] text-base text-slate-700 dark:text-slate-200 placeholder:text-slate-400'
 
   const selectClass =
-    'w-full px-4 py-2.5 bg-[#f8f9ff] dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-sm text-slate-700 dark:text-slate-200 focus-visible:border-indigo-600 outline-none appearance-none cursor-pointer'
+    'w-full px-4 py-2.5 bg-[#f8f9ff] dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg text-base text-slate-700 dark:text-slate-200 focus-visible:border-indigo-600 outline-none appearance-none cursor-pointer'
 
   return (
     <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0_8px_32px_rgba(15,23,42,0.15)] dark:shadow-none dark:border dark:border-slate-700 overflow-hidden">
@@ -121,7 +136,7 @@ export function NewTaskForm({ onClose, taskToEdit = null }: Props) {
               name="description"
               autoComplete="off"
               // eslint-disable-next-line jsx-a11y/no-autofocus
-              autoFocus
+              autoFocus={!isTouchDevice}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="¿Qué necesitas hacer?…"
@@ -217,7 +232,12 @@ export function NewTaskForm({ onClose, taskToEdit = null }: Props) {
           </div>
 
           {/* Submit */}
-          <div className="pt-1">
+          <div className="pt-1 space-y-3">
+            {submitError && (
+              <p role="alert" className="text-sm text-red-600 dark:text-red-400">
+                {submitError}
+              </p>
+            )}
             <button
               type="submit"
               className="w-full bg-indigo-600 hover:bg-indigo-700 text-white py-3.5 rounded-xl text-base font-semibold active:scale-[0.99] transition-[background-color,transform,box-shadow] shadow-md shadow-indigo-200/50 dark:shadow-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-indigo-600 outline-none"
@@ -225,6 +245,17 @@ export function NewTaskForm({ onClose, taskToEdit = null }: Props) {
             >
               {isEditMode ? 'Actualizar' : 'Guardar'}
             </button>
+
+            {isEditMode && (
+              <button
+                type="button"
+                onClick={handleDelete}
+                className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl text-base font-semibold text-indigo-600 border border-indigo-600 hover:bg-indigo-50 dark:border-indigo-500 dark:text-indigo-400 dark:hover:bg-indigo-900/20 transition-colors outline-none focus-visible:ring-2 focus-visible:ring-indigo-600/40"
+              >
+                <Trash2 size={15} />
+                Eliminar tarea
+              </button>
+            )}
           </div>
         </form>
       </div>

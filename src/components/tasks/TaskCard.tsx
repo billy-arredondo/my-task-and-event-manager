@@ -1,6 +1,6 @@
 import { useCallback } from 'react'
 import { format } from 'date-fns'
-import { Check, Trash2, ChevronRight } from 'lucide-react'
+import { Check } from 'lucide-react'
 import { CountdownDisplay } from './CountdownDisplay'
 import { useCountdown } from '@/hooks/useCountdown'
 import { useTaskActions } from '@/hooks/useTaskActions'
@@ -13,16 +13,12 @@ interface Props {
 
 export function TaskCard({ task, onClick }: Props) {
   const countdown = useCountdown(task.deadline)
-  const { deleteTask, toggleComplete } = useTaskActions()
+  const { toggleComplete } = useTaskActions()
 
   const handleToggle = useCallback((e: React.MouseEvent) => {
     e.stopPropagation()
-    toggleComplete(task.id)
-  }, [toggleComplete, task.id])
-  const handleDelete = useCallback((e: React.MouseEvent) => {
-    e.stopPropagation()
-    deleteTask(task.id)
-  }, [deleteTask, task.id])
+    toggleComplete(task.id, !task.completed)
+  }, [toggleComplete, task.id, task.completed])
   const handleClick = useCallback(() => onClick(task), [onClick, task])
 
   return (
@@ -60,19 +56,6 @@ export function TaskCard({ task, onClick }: Props) {
 
       <div className="flex items-center gap-3 shrink-0 ml-4">
         {!task.completed && <CountdownDisplay value={countdown} />}
-
-        <button
-          onClick={handleDelete}
-          className="opacity-0 group-hover:opacity-100 transition-opacity p-1 text-slate-400 hover:text-red-500 dark:hover:text-red-400"
-          aria-label="Eliminar"
-        >
-          <Trash2 size={15} />
-        </button>
-
-        <ChevronRight
-          size={18}
-          className="text-slate-300 dark:text-slate-600 opacity-0 group-hover:opacity-100 transition-opacity"
-        />
       </div>
     </div>
   )
