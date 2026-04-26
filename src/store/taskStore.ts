@@ -2,6 +2,13 @@ import { create } from 'zustand'
 import { persist } from 'zustand/middleware'
 import type { Task } from '@/types/task'
 
+function generateId(): string {
+  if (typeof crypto !== 'undefined' && crypto.randomUUID) {
+    return crypto.randomUUID()
+  }
+  return Date.now().toString(36) + Math.random().toString(36).slice(2)
+}
+
 interface TaskState {
   tasks: Task[]
   addTask: (input: Omit<Task, 'id' | 'createdAt' | 'completed'>) => void
@@ -20,7 +27,7 @@ export const useTaskStore = create<TaskState>()(
             ...state.tasks,
             {
               ...input,
-              id: crypto.randomUUID(),
+              id: generateId(),
               completed: false,
               createdAt: new Date().toISOString(),
             },
