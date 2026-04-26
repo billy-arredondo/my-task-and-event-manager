@@ -47,6 +47,8 @@ Thumbs.db
 
 # Claude Code — configuración local de la máquina (nunca compartir)
 .claude/settings.local.json
+# Claude Code — worktrees temporales de agentes
+.claude/worktrees/
 
 # Supabase — archivos temporales del CLI (generados al vincular el proyecto)
 supabase/.temp/

@@ -17,8 +17,8 @@ export function TaskCard({ task, onClick }: Props) {
 
   const handleToggle = useCallback((e: React.MouseEvent) => {
     e.stopPropagation()
-    toggleComplete(task.id)
-  }, [toggleComplete, task.id])
+    toggleComplete(task.id, !task.completed)
+  }, [toggleComplete, task.id, task.completed])
   const handleClick = useCallback(() => onClick(task), [onClick, task])
 
   return (
