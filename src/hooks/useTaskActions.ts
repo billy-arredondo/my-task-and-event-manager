@@ -11,6 +11,7 @@ export function useTaskActions() {
 
   const addMutation = useMutation({
     mutationFn: async (input: Omit<Task, 'id' | 'createdAt' | 'completed'>) => {
+      if (!userId) throw new Error('Not authenticated')
       const { error } = await supabase.from('tasks').insert({
         user_id: userId,
         description: input.description,
@@ -54,8 +55,8 @@ export function useTaskActions() {
   })
 
   return {
-    addTask: (input: Omit<Task, 'id' | 'createdAt' | 'completed'>) => addMutation.mutate(input),
-    updateTask: (id: string, input: Omit<Task, 'id' | 'createdAt' | 'completed'>) => updateMutation.mutate({ id, input }),
+    addTask: (input: Omit<Task, 'id' | 'createdAt' | 'completed'>) => addMutation.mutateAsync(input),
+    updateTask: (id: string, input: Omit<Task, 'id' | 'createdAt' | 'completed'>) => updateMutation.mutateAsync({ id, input }),
     deleteTask: (id: string) => deleteMutation.mutate(id),
     toggleComplete: (id: string, completed: boolean) => toggleMutation.mutate({ id, completed }),
   }

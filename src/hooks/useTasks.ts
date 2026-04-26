@@ -14,13 +14,13 @@ async function fetchTasks(): Promise<Task[]> {
   if (error) throw error
 
   return data.map((row) => ({
-    id: row.id as string,
-    description: row.description as string,
-    deadline: row.deadline as string | null,
-    completed: row.completed as boolean,
-    priority: row.priority as Task['priority'],
-    category: row.category as string | undefined,
-    createdAt: row.created_at as string,
+    id: row.id ?? '',
+    description: row.description ?? '',
+    deadline: row.deadline ?? null,
+    completed: row.completed ?? false,
+    priority: (row.priority ?? undefined) as Task['priority'],
+    category: row.category ?? undefined,
+    createdAt: row.created_at ?? '',
   }))
 }
 

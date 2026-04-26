@@ -24,7 +24,8 @@ create policy "Users can insert own tasks"
 
 create policy "Users can update own tasks"
   on public.tasks for update
-  using (auth.uid() = user_id);
+  using (auth.uid() = user_id)
+  with check (auth.uid() = user_id);
 
 create policy "Users can delete own tasks"
   on public.tasks for delete
