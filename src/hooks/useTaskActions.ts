@@ -2,6 +2,7 @@ import { useMutation, useQueryClient } from '@tanstack/react-query'
 import { supabase } from '@/lib/supabase'
 import { useAuthStore } from '@/store/authStore'
 import { taskKeys } from '@/lib/taskKeys'
+import { computeNextDeadline } from '@/lib/utils'
 import type { Task } from '@/types/task'
 
 export function useTaskActions() {
@@ -19,6 +20,8 @@ export function useTaskActions() {
         priority: input.priority,
         category: input.category,
         completed: false,
+        repeat_frequency: input.repeatFrequency ?? null,
+        repeat_interval: input.repeatInterval ?? null,
       })
       if (error) throw error
     },
@@ -32,6 +35,8 @@ export function useTaskActions() {
         deadline: input.deadline ?? null,
         priority: input.priority,
         category: input.category,
+        repeat_frequency: input.repeatFrequency ?? null,
+        repeat_interval: input.repeatInterval ?? null,
       }).eq('id', id)
       if (error) throw error
     },
@@ -47,9 +52,24 @@ export function useTaskActions() {
   })
 
   const toggleMutation = useMutation({
-    mutationFn: async ({ id, completed }: { id: string; completed: boolean }) => {
-      const { error } = await supabase.from('tasks').update({ completed }).eq('id', id)
+    mutationFn: async ({ task, completed }: { task: Task; completed: boolean }) => {
+      const { error } = await supabase.from('tasks').update({ completed }).eq('id', task.id)
       if (error) throw error
+
+      if (completed && task.repeatFrequency && task.deadline) {
+        const nextDeadline = computeNextDeadline(task.deadline, task.repeatFrequency, task.repeatInterval ?? 1)
+        const { error: insertError } = await supabase.from('tasks').insert({
+          user_id: userId,
+          description: task.description,
+          deadline: nextDeadline,
+          priority: task.priority,
+          category: task.category,
+          repeat_frequency: task.repeatFrequency,
+          repeat_interval: task.repeatInterval ?? 1,
+          completed: false,
+        })
+        if (insertError) throw insertError
+      }
     },
     onSuccess: invalidate,
   })
@@ -58,6 +78,6 @@ export function useTaskActions() {
     addTask: (input: Omit<Task, 'id' | 'createdAt' | 'completed'>) => addMutation.mutateAsync(input),
     updateTask: (id: string, input: Omit<Task, 'id' | 'createdAt' | 'completed'>) => updateMutation.mutateAsync({ id, input }),
     deleteTask: (id: string) => deleteMutation.mutate(id),
-    toggleComplete: (id: string, completed: boolean) => toggleMutation.mutate({ id, completed }),
+    toggleComplete: (task: Task, completed: boolean) => toggleMutation.mutate({ task, completed }),
   }
 }

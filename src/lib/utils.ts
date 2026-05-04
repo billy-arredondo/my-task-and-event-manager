@@ -1,7 +1,7 @@
 import { type ClassValue, clsx } from 'clsx'
 import { twMerge } from 'tailwind-merge'
-import { differenceInSeconds, addHours } from 'date-fns'
-import type { Task, GroupedTasks } from '@/types/task'
+import { differenceInSeconds, addHours, addDays, addWeeks, addMonths, addYears } from 'date-fns'
+import type { Task, GroupedTasks, RepeatFrequency } from '@/types/task'
 
 export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs))
@@ -45,4 +45,18 @@ export function groupTasks(tasks: Task[]): GroupedTasks {
   expired.sort(byDeadline)
 
   return { urgent, later, expired, noDeadline, completed }
+}
+
+export function computeNextDeadline(deadline: string, frequency: RepeatFrequency, interval: number): string {
+  const now = new Date()
+  let next = new Date(deadline)
+  do {
+    switch (frequency) {
+      case 'daily':   next = addDays(next, interval); break
+      case 'weekly':  next = addWeeks(next, interval); break
+      case 'monthly': next = addMonths(next, interval); break
+      case 'yearly':  next = addYears(next, interval); break
+    }
+  } while (next <= now)
+  return next.toISOString()
 }
