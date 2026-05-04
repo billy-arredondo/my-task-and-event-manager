@@ -21,6 +21,8 @@ async function fetchTasks(): Promise<Task[]> {
     priority: (row.priority ?? undefined) as Task['priority'],
     category: row.category ?? undefined,
     createdAt: row.created_at ?? '',
+    repeatFrequency: (row.repeat_frequency ?? null) as Task['repeatFrequency'],
+    repeatInterval: row.repeat_interval ?? null,
   }))
 }
 

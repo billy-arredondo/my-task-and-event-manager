@@ -1,9 +1,9 @@
 import { useEffect, useState, useCallback } from 'react'
 import { format } from 'date-fns'
-import { X, ClipboardList, Calendar, Trash2 } from 'lucide-react'
+import { X, ClipboardList, Calendar, Trash2, RefreshCw } from 'lucide-react'
 import { useTaskActions } from '@/hooks/useTaskActions'
 import { Switch } from '@/components/ui/switch'
-import type { Priority, Task } from '@/types/task'
+import type { Priority, RepeatFrequency, Task } from '@/types/task'
 
 interface Props {
   onClose: () => void
@@ -15,6 +15,9 @@ export function NewTaskForm({ onClose, taskToEdit = null }: Props) {
   const [date, setDate] = useState('')
   const [time, setTime] = useState('')
   const [hasDeadline, setHasDeadline] = useState(true)
+  const [hasRepeat, setHasRepeat] = useState(false)
+  const [repeatFrequency, setRepeatFrequency] = useState<RepeatFrequency>('weekly')
+  const [repeatInterval, setRepeatInterval] = useState(1)
   const [priority, setPriority] = useState<Priority>('medium')
   const [category, setCategory] = useState('Trabajo')
   const [submitError, setSubmitError] = useState<string | null>(null)
@@ -33,6 +36,9 @@ export function NewTaskForm({ onClose, taskToEdit = null }: Props) {
       setDate('')
       setTime('')
       setHasDeadline(true)
+      setHasRepeat(false)
+      setRepeatFrequency('weekly')
+      setRepeatInterval(1)
       setPriority('medium')
       setCategory('Trabajo')
       return
@@ -41,6 +47,9 @@ export function NewTaskForm({ onClose, taskToEdit = null }: Props) {
     setDescription(taskToEdit.description)
     setPriority(taskToEdit.priority ?? 'medium')
     setCategory(taskToEdit.category ?? 'Trabajo')
+    setHasRepeat(!!taskToEdit.repeatFrequency)
+    setRepeatFrequency(taskToEdit.repeatFrequency ?? 'weekly')
+    setRepeatInterval(taskToEdit.repeatInterval ?? 1)
 
     if (!taskToEdit.deadline) {
       setHasDeadline(false)
@@ -76,7 +85,14 @@ export function NewTaskForm({ onClose, taskToEdit = null }: Props) {
       ? new Date(`${date}T${time}`).toISOString()
       : null
 
-    const payload = { description: description.trim(), deadline, priority, category }
+    const payload = {
+      description: description.trim(),
+      deadline,
+      priority,
+      category,
+      repeatFrequency: hasDeadline && hasRepeat ? repeatFrequency : null,
+      repeatInterval: hasDeadline && hasRepeat ? repeatInterval : null,
+    }
 
     try {
       setSubmitError(null)
@@ -89,7 +105,7 @@ export function NewTaskForm({ onClose, taskToEdit = null }: Props) {
     } catch (err) {
       setSubmitError(err instanceof Error ? err.message : 'Error al guardar la tarea')
     }
-  }, [description, hasDeadline, date, time, priority, category, isEditMode, taskToEdit, addTask, updateTask, onClose])
+  }, [description, hasDeadline, hasRepeat, repeatFrequency, repeatInterval, date, time, priority, category, isEditMode, taskToEdit, addTask, updateTask, onClose])
 
   const inputClass =
     'w-full px-4 py-3 bg-[#f8f9ff] dark:bg-slate-700 border border-slate-200 dark:border-slate-600 rounded-lg focus-visible:ring-2 focus-visible:ring-indigo-600/20 focus-visible:border-indigo-600 outline-none transition-[border-color,box-shadow] text-base text-slate-700 dark:text-slate-200 placeholder:text-slate-400'
@@ -156,42 +172,94 @@ export function NewTaskForm({ onClose, taskToEdit = null }: Props) {
               </div>
               <Switch
                 checked={hasDeadline}
-                onCheckedChange={(v) => setHasDeadline(v)}
+                onCheckedChange={(v) => { setHasDeadline(v); if (!v) setHasRepeat(false) }}
                 aria-label="Activar fecha límite"
               />
             </div>
 
             {hasDeadline && (
-              <div className="grid grid-cols-2 gap-4">
-                <div className="space-y-1">
-                  <label htmlFor="task-date" className="block text-[10px] uppercase font-bold text-slate-400 tracking-wider">
-                    Fecha
-                  </label>
-                  <input
-                    id="task-date"
-                    name="date"
-                    type="date"
-                    value={date}
-                    onChange={(e) => setDate(e.target.value)}
-                    className={selectClass}
-                    required={hasDeadline}
-                  />
+              <>
+                <div className="grid grid-cols-2 gap-4">
+                  <div className="space-y-1">
+                    <label htmlFor="task-date" className="block text-[10px] uppercase font-bold text-slate-400 tracking-wider">
+                      Fecha
+                    </label>
+                    <input
+                      id="task-date"
+                      name="date"
+                      type="date"
+                      value={date}
+                      onChange={(e) => setDate(e.target.value)}
+                      className={selectClass}
+                      required={hasDeadline}
+                    />
+                  </div>
+                  <div className="space-y-1">
+                    <label htmlFor="task-time" className="block text-[10px] uppercase font-bold text-slate-400 tracking-wider">
+                      Hora
+                    </label>
+                    <input
+                      id="task-time"
+                      name="time"
+                      type="time"
+                      value={time}
+                      onChange={(e) => setTime(e.target.value)}
+                      className={selectClass}
+                      required={hasDeadline}
+                    />
+                  </div>
                 </div>
-                <div className="space-y-1">
-                  <label htmlFor="task-time" className="block text-[10px] uppercase font-bold text-slate-400 tracking-wider">
-                    Hora
-                  </label>
-                  <input
-                    id="task-time"
-                    name="time"
-                    type="time"
-                    value={time}
-                    onChange={(e) => setTime(e.target.value)}
-                    className={selectClass}
-                    required={hasDeadline}
-                  />
+
+                <div className="border-t border-slate-200 dark:border-slate-600 pt-3">
+                  <div className="flex items-center justify-between mb-3">
+                    <div className="flex items-center gap-2">
+                      <RefreshCw size={15} className="text-slate-400" aria-hidden="true" />
+                      <span className="text-sm font-bold text-slate-700 dark:text-slate-300">Repetir</span>
+                    </div>
+                    <Switch
+                      checked={hasRepeat}
+                      onCheckedChange={setHasRepeat}
+                      aria-label="Activar repetición"
+                    />
+                  </div>
+
+                  {hasRepeat && (
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="space-y-1">
+                        <label htmlFor="task-repeat-interval" className="block text-[10px] uppercase font-bold text-slate-400 tracking-wider">
+                          Cada
+                        </label>
+                        <input
+                          id="task-repeat-interval"
+                          type="number"
+                          min={1}
+                          value={repeatFrequency === 'weekday' ? 1 : repeatInterval}
+                          onChange={(e) => setRepeatInterval(Math.max(1, Number(e.target.value)))}
+                          disabled={repeatFrequency === 'weekday'}
+                          className={selectClass + (repeatFrequency === 'weekday' ? ' opacity-40 cursor-not-allowed' : '')}
+                        />
+                      </div>
+                      <div className="space-y-1">
+                        <label htmlFor="task-repeat-frequency" className="block text-[10px] uppercase font-bold text-slate-400 tracking-wider">
+                          Frecuencia
+                        </label>
+                        <select
+                          id="task-repeat-frequency"
+                          value={repeatFrequency}
+                          onChange={(e) => setRepeatFrequency(e.target.value as RepeatFrequency)}
+                          className={selectClass}
+                        >
+                          <option value="daily">Día(s)</option>
+                          <option value="weekday">Días laborables</option>
+                          <option value="weekly">Semana(s)</option>
+                          <option value="monthly">Mes(es)</option>
+                          <option value="yearly">Año(s)</option>
+                        </select>
+                      </div>
+                    </div>
+                  )}
                 </div>
-              </div>
+              </>
             )}
           </div>
 
