@@ -233,9 +233,10 @@ export function NewTaskForm({ onClose, taskToEdit = null }: Props) {
                           id="task-repeat-interval"
                           type="number"
                           min={1}
-                          value={repeatInterval}
+                          value={repeatFrequency === 'weekday' ? 1 : repeatInterval}
                           onChange={(e) => setRepeatInterval(Math.max(1, Number(e.target.value)))}
-                          className={selectClass}
+                          disabled={repeatFrequency === 'weekday'}
+                          className={selectClass + (repeatFrequency === 'weekday' ? ' opacity-40 cursor-not-allowed' : '')}
                         />
                       </div>
                       <div className="space-y-1">
@@ -249,6 +250,7 @@ export function NewTaskForm({ onClose, taskToEdit = null }: Props) {
                           className={selectClass}
                         >
                           <option value="daily">Día(s)</option>
+                          <option value="weekday">Días laborables</option>
                           <option value="weekly">Semana(s)</option>
                           <option value="monthly">Mes(es)</option>
                           <option value="yearly">Año(s)</option>

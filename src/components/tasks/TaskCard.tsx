@@ -50,7 +50,12 @@ export function TaskCard({ task, onClick }: Props) {
             <span className="text-xs text-slate-400 dark:text-slate-500 flex items-center gap-1">
               {format(new Date(task.deadline), 'yyyy-MM-dd HH:mm')}
               {task.repeatFrequency && (
-                <RefreshCw size={10} className="text-indigo-400 dark:text-indigo-500 shrink-0" aria-label="Tarea repetible" />
+                <>
+                  <RefreshCw size={10} className="text-indigo-400 dark:text-indigo-500 shrink-0" aria-hidden="true" />
+                  <span className="text-indigo-400 dark:text-indigo-500">
+                    {{ daily: 'Diario', weekday: 'Laborables', weekly: 'Semanal', monthly: 'Mensual', yearly: 'Anual' }[task.repeatFrequency]}
+                  </span>
+                </>
               )}
             </span>
           )}

@@ -53,6 +53,13 @@ export function computeNextDeadline(deadline: string, frequency: RepeatFrequency
   do {
     switch (frequency) {
       case 'daily':   next = addDays(next, interval); break
+      case 'weekday': {
+        next = addDays(next, 1)
+        const day = next.getDay()
+        if (day === 6) next = addDays(next, 2) // Saturday → Monday
+        if (day === 0) next = addDays(next, 1) // Sunday → Monday
+        break
+      }
       case 'weekly':  next = addWeeks(next, interval); break
       case 'monthly': next = addMonths(next, interval); break
       case 'yearly':  next = addYears(next, interval); break

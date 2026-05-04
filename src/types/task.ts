@@ -1,5 +1,5 @@
 export type Priority = 'low' | 'medium' | 'high'
-export type RepeatFrequency = 'daily' | 'weekly' | 'monthly' | 'yearly'
+export type RepeatFrequency = 'daily' | 'weekday' | 'weekly' | 'monthly' | 'yearly'
 
 export interface Task {
   id: string
