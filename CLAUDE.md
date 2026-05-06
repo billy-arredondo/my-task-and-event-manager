@@ -1,5 +1,14 @@
 # CLAUDE.md
 
+## Personal Working Preferences
+
+- Be concise when explaining changes.
+- Prefer small, incremental changes over large refactors.
+- Ask before adding dependencies.
+- Explain risks or assumptions clearly.
+- When proposing UI changes, prioritize simplicity and mobile UX.
+- When modifying code, follow the existing project structure.
+
 This file provides guidance to Claude Code (claude.ai/code) when working with code in this repository.
 
 ## Commands
