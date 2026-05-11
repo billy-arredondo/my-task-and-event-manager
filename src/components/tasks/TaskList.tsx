@@ -130,6 +130,8 @@ export function TaskList({ onTaskClick }: Props) {
         tasks={grouped.completed}
         badgeClass="bg-slate-100 text-slate-500 dark:bg-slate-700 dark:text-slate-400"
         onTaskClick={onTaskClick}
+        collapsible
+        defaultCollapsed
       />
 
       {/* Progress Card */}
