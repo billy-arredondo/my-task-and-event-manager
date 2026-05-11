@@ -21,9 +21,11 @@ export type CountdownValue =
   | { type: 'no-deadline' }
 
 export interface GroupedTasks {
-  urgent: Task[]
+  overdue: Task[]
+  today: Task[]
+  tomorrow: Task[]
+  thisWeek: Task[]
   later: Task[]
-  expired: Task[]
   noDeadline: Task[]
   completed: Task[]
 }

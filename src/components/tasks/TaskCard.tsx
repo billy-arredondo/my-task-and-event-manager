@@ -1,5 +1,6 @@
 import { useCallback } from 'react'
 import { format } from 'date-fns'
+import { es } from 'date-fns/locale'
 import { Check, RefreshCw } from 'lucide-react'
 import { CountdownDisplay } from './CountdownDisplay'
 import { useCountdown } from '@/hooks/useCountdown'
@@ -21,9 +22,17 @@ export function TaskCard({ task, onClick }: Props) {
   }, [toggleComplete, task])
   const handleClick = useCallback(() => onClick(task), [onClick, task])
 
+  const priorityBorder = task.completed
+    ? 'border-transparent'
+    : task.priority === 'high'
+      ? 'border-red-200 hover:border-red-500 dark:border-red-900 dark:hover:border-red-500'
+      : task.priority === 'medium'
+        ? 'border-amber-200 hover:border-amber-400 dark:border-amber-700 dark:hover:border-amber-400'
+        : 'border-transparent'
+
   return (
     <div
-      className="group flex items-center justify-between p-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer"
+      className={`group flex items-center justify-between p-4 hover:bg-slate-50 dark:hover:bg-slate-700/50 transition-colors cursor-pointer border-l-4 ${priorityBorder}`}
       onClick={handleClick}
     >
       <div className="flex items-center gap-4 flex-1 min-w-0">
@@ -48,7 +57,7 @@ export function TaskCard({ task, onClick }: Props) {
           </span>
           {task.deadline && (
             <span className="text-xs text-slate-400 dark:text-slate-500 flex items-center gap-1">
-              {format(new Date(task.deadline), 'yyyy-MM-dd HH:mm')}
+              {format(new Date(task.deadline), 'd MMM, HH:mm', { locale: es })}
               {task.repeatFrequency && (
                 <>
                   <RefreshCw size={10} className="text-indigo-400 dark:text-indigo-500 shrink-0" aria-hidden="true" />

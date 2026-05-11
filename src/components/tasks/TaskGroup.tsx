@@ -27,7 +27,7 @@ export function TaskGroup({
         </span>
       </div>
       <div className="bg-white dark:bg-slate-800 rounded-xl shadow-[0px_4px_12px_rgba(15,23,42,0.05)] dark:shadow-none dark:border dark:border-slate-700 overflow-hidden">
-        <div className="divide-y divide-slate-100 dark:divide-slate-700">
+        <div>
           {tasks.map((task) => (
             <TaskCard key={task.id} task={task} onClick={onTaskClick} />
           ))}
