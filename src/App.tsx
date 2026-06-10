@@ -1,5 +1,5 @@
 import { lazy, Suspense, useEffect } from 'react'
-import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom'
+import { BrowserRouter, Routes, Route, Navigate, useNavigate } from 'react-router-dom'
 import { QueryClientProvider } from '@tanstack/react-query'
 import { queryClient } from '@/lib/queryClient'
 import { AppShell } from '@/components/layout/AppShell'
@@ -10,9 +10,11 @@ import { useAuthStore } from '@/store/authStore'
 
 const TaskListPage = lazy(() => import('./pages/TaskListPage').then(m => ({ default: m.TaskListPage })))
 const AuthPage = lazy(() => import('./pages/AuthPage').then(m => ({ default: m.AuthPage })))
+const ResetPasswordPage = lazy(() => import('./pages/ResetPasswordPage').then(m => ({ default: m.ResetPasswordPage })))
 
 function AuthProvider({ children }: { children: React.ReactNode }) {
   const { setSession, setInitialized, initialized } = useAuthStore()
+  const navigate = useNavigate()
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -20,9 +22,13 @@ function AuthProvider({ children }: { children: React.ReactNode }) {
       setInitialized()
     })
 
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = supabase.auth.onAuthStateChange((event, session) => {
       setSession(session)
-      if (!session) queryClient.clear()
+      if (!session) {
+        queryClient.clear()
+      } else if (event === 'PASSWORD_RECOVERY') {
+        navigate('/auth/reset-password')
+      }
     })
 
     return () => subscription.unsubscribe()
@@ -41,6 +47,7 @@ export default function App() {
           <AuthProvider>
             <Suspense fallback={<div />}>
               <Routes>
+                <Route path="/auth/reset-password" element={<ResetPasswordPage />} />
                 <Route path="/auth" element={<AuthPage />} />
                 <Route element={<AuthGuard />}>
                   <Route path="/" element={<AppShell />}>

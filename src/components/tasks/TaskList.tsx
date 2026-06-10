@@ -1,18 +1,45 @@
-import { useMemo } from 'react'
-import { SlidersHorizontal, ArrowUpDown } from 'lucide-react'
+import { useMemo, useState } from 'react'
 import { useTasks } from '@/hooks/useTasks'
 import { TaskGroup } from './TaskGroup'
-import type { Task } from '@/types/task'
+import type { Task, Priority } from '@/types/task'
 
 interface Props {
   onTaskClick: (task: Task) => void
 }
 
+const PRIORITY_FILTERS: { label: string; value: Priority | null }[] = [
+  { label: 'Todas', value: null },
+  { label: 'Alta', value: 'high' },
+  { label: 'Media', value: 'medium' },
+  { label: 'Baja', value: 'low' },
+]
+
 export function TaskList({ onTaskClick }: Props) {
   const grouped = useTasks()
+  const [filterPriority, setFilterPriority] = useState<Priority | null>(null)
+
+  const filtered = useMemo(() => {
+    if (!filterPriority) return grouped
+    const keep = (tasks: Task[]) => tasks.filter(t => t.priority === filterPriority)
+    return {
+      ...grouped,
+      overdue: keep(grouped.overdue),
+      today: keep(grouped.today),
+      tomorrow: keep(grouped.tomorrow),
+      thisWeek: keep(grouped.thisWeek),
+      later: keep(grouped.later),
+      noDeadline: keep(grouped.noDeadline),
+    }
+  }, [grouped, filterPriority])
 
   const totalTasks = useMemo(
-    () => grouped.urgent.length + grouped.later.length + grouped.expired.length + grouped.noDeadline.length,
+    () =>
+      grouped.overdue.length +
+      grouped.today.length +
+      grouped.tomorrow.length +
+      grouped.thisWeek.length +
+      grouped.later.length +
+      grouped.noDeadline.length,
     [grouped]
   )
   const completedCount = useMemo(() => grouped.completed.length, [grouped])
@@ -38,14 +65,19 @@ export function TaskList({ onTaskClick }: Props) {
           </p>
         </div>
         <div className="flex gap-2">
-          <button className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
-            <SlidersHorizontal size={16} />
-            Filtrar
-          </button>
-          <button className="bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 hover:bg-slate-50 dark:hover:bg-slate-700 transition-colors">
-            <ArrowUpDown size={16} />
-            Ordenar
-          </button>
+          {PRIORITY_FILTERS.map(({ label, value }) => (
+            <button
+              key={label}
+              onClick={() => setFilterPriority(value)}
+              className={`px-3 py-1.5 rounded-lg text-sm font-medium transition-colors ${
+                filterPriority === value
+                  ? 'bg-indigo-600 text-white'
+                  : 'bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-300 hover:bg-slate-50 dark:hover:bg-slate-700'
+              }`}
+            >
+              {label}
+            </button>
+          ))}
         </div>
       </div>
 
@@ -58,26 +90,38 @@ export function TaskList({ onTaskClick }: Props) {
       )}
 
       <TaskGroup
-        title="Menos de 24 horas"
-        tasks={grouped.urgent}
-        badgeClass="bg-[#ffdad6] text-[#93000a] dark:bg-red-900/30 dark:text-red-300"
+        title="Vencidas"
+        tasks={filtered.overdue}
+        badgeClass="bg-red-100 text-red-700 dark:bg-red-900/30 dark:text-red-300"
         onTaskClick={onTaskClick}
       />
       <TaskGroup
-        title="Más de 24 horas"
-        tasks={grouped.later}
+        title="Hoy"
+        tasks={filtered.today}
+        badgeClass="bg-orange-100 text-orange-700 dark:bg-orange-900/30 dark:text-orange-300"
+        onTaskClick={onTaskClick}
+      />
+      <TaskGroup
+        title="Mañana"
+        tasks={filtered.tomorrow}
+        badgeClass="bg-amber-100 text-amber-700 dark:bg-amber-900/30 dark:text-amber-300"
+        onTaskClick={onTaskClick}
+      />
+      <TaskGroup
+        title="Esta semana"
+        tasks={filtered.thisWeek}
+        badgeClass="bg-yellow-100 text-yellow-700 dark:bg-yellow-900/30 dark:text-yellow-300"
+        onTaskClick={onTaskClick}
+      />
+      <TaskGroup
+        title="Más adelante"
+        tasks={filtered.later}
         badgeClass="bg-surface-container-highest text-on-surface-variant dark:bg-slate-700 dark:text-slate-300"
         onTaskClick={onTaskClick}
       />
       <TaskGroup
-        title="Vencidas"
-        tasks={grouped.expired}
-        badgeClass="bg-slate-100 text-slate-500 dark:bg-slate-700 dark:text-slate-400"
-        onTaskClick={onTaskClick}
-      />
-      <TaskGroup
         title="Sin fecha"
-        tasks={grouped.noDeadline}
+        tasks={filtered.noDeadline}
         badgeClass="bg-surface-container text-secondary dark:bg-slate-700 dark:text-slate-400"
         onTaskClick={onTaskClick}
       />
@@ -86,6 +130,8 @@ export function TaskList({ onTaskClick }: Props) {
         tasks={grouped.completed}
         badgeClass="bg-slate-100 text-slate-500 dark:bg-slate-700 dark:text-slate-400"
         onTaskClick={onTaskClick}
+        collapsible
+        defaultCollapsed
       />
 
       {/* Progress Card */}
@@ -107,7 +153,7 @@ export function TaskList({ onTaskClick }: Props) {
               />
             </div>
             <span className="text-xs font-bold uppercase tracking-wider text-indigo-400">
-              Progreso Diario
+              Progreso General
             </span>
           </div>
         </div>

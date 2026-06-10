@@ -6,7 +6,7 @@ import { useAuthStore } from '@/store/authStore'
 import { useTheme } from '@/hooks/useTheme'
 import { ThemeToggle } from '@/components/layout/ThemeToggle'
 
-type Mode = 'login' | 'signup'
+type Mode = 'login' | 'signup' | 'forgot'
 
 export function AuthPage() {
   useTheme()
@@ -30,10 +30,15 @@ export function AuthPage() {
       if (mode === 'login') {
         const { error } = await supabase.auth.signInWithPassword({ email, password })
         if (error) throw error
-      } else {
+      } else if (mode === 'signup') {
         const { error } = await supabase.auth.signUp({ email, password })
         if (error) throw error
         setMessage('Revisa tu correo para confirmar tu cuenta.')
+      } else if (mode === 'forgot') {
+        const redirectTo = `${window.location.origin}/auth/reset-password`
+        const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo })
+        if (error) throw error
+        setMessage('Revisa tu correo para restablecer tu contraseña.')
       }
     } catch (err: unknown) {
       setError(err instanceof Error ? err.message : 'Error inesperado')
@@ -62,7 +67,7 @@ export function AuthPage() {
         {/* Card */}
         <div className="bg-white dark:bg-slate-900 rounded-2xl shadow-[0_8px_32px_rgba(15,23,42,0.10)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.40)] p-8">
           <h2 className="text-lg font-semibold text-slate-900 dark:text-slate-100 mb-6" style={{ fontFamily: 'Manrope, sans-serif' }}>
-            {mode === 'login' ? 'Iniciar sesión' : 'Crear cuenta'}
+            {mode === 'login' ? 'Iniciar sesión' : mode === 'signup' ? 'Crear cuenta' : 'Restablecer contraseña'}
           </h2>
 
           <form onSubmit={handleSubmit} className="space-y-4">
@@ -82,22 +87,24 @@ export function AuthPage() {
               />
             </div>
 
-            <div className="space-y-1.5">
-              <label htmlFor="auth-password" className="block text-sm font-semibold text-slate-700 dark:text-slate-300">
-                Contraseña
-              </label>
-              <input
-                id="auth-password"
-                type="password"
-                autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
-                required
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                placeholder="••••••••"
-                className={inputClass}
-                minLength={6}
-              />
-            </div>
+            {mode !== 'forgot' && (
+              <div className="space-y-1.5">
+                <label htmlFor="auth-password" className="block text-sm font-semibold text-slate-700 dark:text-slate-300">
+                  Contraseña
+                </label>
+                <input
+                  id="auth-password"
+                  type="password"
+                  autoComplete={mode === 'login' ? 'current-password' : 'new-password'}
+                  required
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  placeholder="••••••••"
+                  className={inputClass}
+                  minLength={6}
+                />
+              </div>
+            )}
 
             {error && (
               <p className="text-sm text-red-600 bg-red-50 dark:bg-red-950/40 border border-red-100 dark:border-red-900 rounded-lg px-3 py-2">
@@ -117,18 +124,51 @@ export function AuthPage() {
               className="w-full bg-indigo-600 hover:bg-indigo-700 disabled:opacity-60 text-white py-3 rounded-xl text-base font-semibold transition-colors"
               style={{ fontFamily: 'Manrope, sans-serif' }}
             >
-              {loading ? 'Cargando…' : mode === 'login' ? 'Entrar' : 'Registrarse'}
+              {loading ? 'Cargando…' : mode === 'forgot' ? 'Enviar enlace' : mode === 'login' ? 'Entrar' : 'Registrarse'}
             </button>
           </form>
 
           <p className="text-center text-sm text-slate-500 dark:text-slate-400 mt-6">
-            {mode === 'login' ? '¿No tienes cuenta?' : '¿Ya tienes cuenta?'}{' '}
-            <button
-              onClick={() => { setMode(mode === 'login' ? 'signup' : 'login'); setError(null); setMessage(null) }}
-              className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline"
-            >
-              {mode === 'login' ? 'Regístrate' : 'Inicia sesión'}
-            </button>
+            {mode === 'login' && (
+              <>
+                <button
+                  onClick={() => { setMode('forgot'); setError(null); setMessage(null) }}
+                  className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline block w-full"
+                >
+                  ¿Olvidaste tu contraseña?
+                </button>
+                <span className="mt-3 block">¿No tienes cuenta?{' '}
+                  <button
+                    onClick={() => { setMode('signup'); setError(null); setMessage(null) }}
+                    className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline"
+                  >
+                    Regístrate
+                  </button>
+                </span>
+              </>
+            )}
+            {mode === 'signup' && (
+              <>
+                ¿Ya tienes cuenta?{' '}
+                <button
+                  onClick={() => { setMode('login'); setError(null); setMessage(null) }}
+                  className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline"
+                >
+                  Inicia sesión
+                </button>
+              </>
+            )}
+            {mode === 'forgot' && (
+              <>
+                ¿Ya recuerdas tu contraseña?{' '}
+                <button
+                  onClick={() => { setMode('login'); setError(null); setMessage(null); setEmail(''); setPassword('') }}
+                  className="text-indigo-600 dark:text-indigo-400 font-semibold hover:underline"
+                >
+                  Inicia sesión
+                </button>
+              </>
+            )}
           </p>
         </div>
       </div>
