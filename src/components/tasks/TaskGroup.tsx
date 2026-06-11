@@ -39,7 +39,7 @@ export function TaskGroup({
           </span>
           <ChevronDown
             size={20}
-            className="text-slate-400 transition-transform duration-300 flex-shrink-0"
+            className="text-slate-400 transition-transform duration-300 shrink-0"
             style={{ transform: open ? 'rotate(180deg)' : 'rotate(0deg)' }}
           />
         </button>
