@@ -27,11 +27,11 @@ No test or lint scripts are configured. TypeScript strict mode is the primary qu
 
 ### State layers
 
-| Layer | Tool | What it holds |
-|---|---|---|
-| Auth | Zustand (`useAuthStore`) | Supabase session, user, initialized flag |
-| Theme | Zustand + persist | Dark/light preference (localStorage) |
-| Server state | React Query | Tasks — fetched from Supabase, cached 30s |
+| Layer        | Tool                     | What it holds                             |
+| ------------ | ------------------------ | ----------------------------------------- |
+| Auth         | Zustand (`useAuthStore`) | Supabase session, user, initialized flag  |
+| Theme        | Zustand + persist        | Dark/light preference (localStorage)      |
+| Server state | React Query              | Tasks — fetched from Supabase, cached 30s |
 
 ### Data flow
 
